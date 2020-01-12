@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_my_list" />
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.powellapps.compraparamim.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_shared"
+        android:name="com.powellapps.compraparamim.ui.shared.SharedListFragment"
+        android:label="Compartilhadas"
+        tools:layout="@layout/fragment_sharedlist" />
 
 
 </navigation>
