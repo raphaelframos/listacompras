@@ -36,18 +36,13 @@ class MyListFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_my_list, container, false)
 
         val recyclerView: RecyclerView = root.findViewById(R.id.recyclerView_myList)
-     //   recyclerView.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.adapter = adapter
-        var list = ArrayList<Shopping>()
-        list.add(Shopping())
-        list.add(Shopping())
-        Toast.makeText(context, "Teste " + list.count(), Toast.LENGTH_LONG).show()
-        adapter.update(list)
 
-       // myListViewModel.list.observe(this, Observer {
-         //   adapter.update(it)
-        //})
+
+        myListViewModel.list.observe(this, Observer {
+            adapter.update(it)
+        })
 
 
         return root

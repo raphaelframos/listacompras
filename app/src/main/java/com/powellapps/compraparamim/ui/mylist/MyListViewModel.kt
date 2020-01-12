@@ -8,9 +8,11 @@ class MyListViewModel : ViewModel() {
 
     private val shoppingList = MutableLiveData<List<Shopping>>().apply {
 
-        val list = emptyList<Shopping>()
-        list.plus(Shopping())
-        list.plus(Shopping())
+        var list = ArrayList<Shopping>()
+        list.add(Shopping())
+        list.add(Shopping())
+        list.add(Shopping())
+        list.add(Shopping())
         value = list
     }
     val list: LiveData<List<Shopping>> = shoppingList
