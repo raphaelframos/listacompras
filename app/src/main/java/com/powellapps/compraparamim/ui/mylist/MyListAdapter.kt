@@ -37,7 +37,7 @@ class MyListAdapter() : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
         val textViewDate : TextView = itemView.findViewById(R.id.textView_date)
 
         fun bind(shopping: Shopping) {
-            textViewNumber.text = "#" + shopping.number
+            textViewNumber.text = shopping.name
             textViewDate.text = "" + shopping.date
         }
 

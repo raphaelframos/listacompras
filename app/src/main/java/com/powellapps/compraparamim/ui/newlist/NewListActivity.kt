@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.utils.Utils
+import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.utils.ConstantsUtils
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NewListActivity : AppCompatActivity() {
 
@@ -26,6 +29,10 @@ class NewListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_list)
 
         editTextName = findViewById(R.id.textInputEditText_name)
+
+        val newPosition = intent.getIntExtra(ConstantsUtils.POSITION.name, 1) + 1
+        val name : String = "#" + newPosition.toString()
+        supportActionBar?.title = name
         val recyclerViewProducts = findViewById<RecyclerView>(R.id.recyclerView_products)
         recyclerViewProducts.layoutManager = LinearLayoutManager(this)
         recyclerViewProducts.adapter = adapter
@@ -37,12 +44,19 @@ class NewListActivity : AppCompatActivity() {
             setNames(it)
         })
 
+        val shopping = Shopping()
+        shopping.adminUser = "1"
+        shopping.date = Date().time
+        shopping.name = name
+
+        val shoppingId = FirebaseRepository().save("1", shopping)
+
         val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
         imageButtonSend.setOnClickListener({
 
             val name = editTextName.text.toString()
             val product = Product(name)
-            FirebaseRepository().save(product)
+            FirebaseRepository().save("1", shoppingId, product)
             editTextName.setText("")
 
         })
@@ -73,7 +87,7 @@ class NewListActivity : AppCompatActivity() {
         if (item != null) {
             when(item.itemId){
                 R.id.item_share -> {
-                    ShareListFragment().show(supportFragmentManager, "share")
+                    ShareListFragment.newInstance("1").show(supportFragmentManager, "share")
                 }
             }
         }

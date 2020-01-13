@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         //temporario
-        val it = Intent(this, NewListActivity::class.java)
+        val it = Intent(this, ListsActivity::class.java)
         startActivity(it)
     }
 }
