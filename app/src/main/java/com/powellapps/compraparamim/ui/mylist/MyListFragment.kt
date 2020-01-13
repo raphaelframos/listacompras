@@ -1,26 +1,20 @@
 package com.powellapps.compraparamim.ui.mylist
 
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.powellapps.compraparamim.R
-import com.powellapps.compraparamim.ui.home.HomeViewModel
-import java.util.concurrent.ConcurrentNavigableMap
+import com.powellapps.compraparamim.ui.newlist.NewListActivity
 
-/**
- * A simple [Fragment] subclass.
- */
 class MyListFragment : Fragment() {
 
     private lateinit var myListViewModel: MyListViewModel
@@ -44,6 +38,11 @@ class MyListFragment : Fragment() {
             adapter.update(it)
         })
 
+        val floatingABNew : FloatingActionButton = root.findViewById(R.id.floatingActionButton_new)
+        floatingABNew.setOnClickListener({
+            val it = Intent(context, NewListActivity::class.java)
+            startActivity(it)
+        })
 
         return root
     }
