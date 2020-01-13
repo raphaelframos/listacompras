@@ -2,6 +2,8 @@ package com.powellapps.compraparamim.ui.newlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.repository.FirebaseRepository
+import com.powellapps.compraparamim.utils.Utils
 
 class NewListActivity : AppCompatActivity() {
 
@@ -35,6 +38,7 @@ class NewListActivity : AppCompatActivity() {
         })
 
 
+        Utils().generateRandomPassword()
 
 
 
@@ -63,5 +67,22 @@ class NewListActivity : AppCompatActivity() {
             names
         )
         editTextName.setAdapter(adapter)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.new_list_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if (item != null) {
+            when(item.itemId){
+                R.id.item_share -> {
+                    
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
