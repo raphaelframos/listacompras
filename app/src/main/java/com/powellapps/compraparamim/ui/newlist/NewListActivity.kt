@@ -37,12 +37,6 @@ class NewListActivity : AppCompatActivity() {
             setNames(it)
         })
 
-
-        Utils().generateRandomPassword()
-
-
-
-
         val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
         imageButtonSend.setOnClickListener({
 
@@ -79,7 +73,7 @@ class NewListActivity : AppCompatActivity() {
         if (item != null) {
             when(item.itemId){
                 R.id.item_share -> {
-                    
+                    ShareListFragment().show(supportFragmentManager, "share")
                 }
             }
         }

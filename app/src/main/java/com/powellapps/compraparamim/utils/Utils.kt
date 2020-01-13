@@ -1,7 +1,7 @@
 package com.powellapps.compraparamim.utils
 
 import android.util.Log
-import java.security.MessageDigest
+import java.util.*
 
 class Utils {
 
@@ -12,10 +12,9 @@ class Utils {
     }
 
     fun generateRandomPassword(): String {
-        val STRING_CHARACTERS = ('0'..'z').toList().toTypedArray()
+        val STRING_CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzZ"
         val password = (1..4).map { STRING_CHARACTERS.random() }.joinToString("")
-        show(password)
-        return password.toLowerCase()
+        return password.toLowerCase(Locale.getDefault())
     }
 
 
