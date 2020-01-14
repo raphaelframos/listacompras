@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:elevation="15dp"
     android:orientation="vertical"
@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="#1"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_products_amount"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView_photo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView_date" />
 
@@ -26,36 +27,22 @@
             android:id="@+id/textView_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
             android:text="01/10/20"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView_products_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="10 produtos"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_date" />
-
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:id="@+id/imageView_photo"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_products_amount"
+            app:layout_constraintStart_toStartOf="@+id/textView_date"
+            app:layout_constraintTop_toBottomOf="@+id/textView_date"
             app:srcCompat="@drawable/googleg_standard_color_18" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

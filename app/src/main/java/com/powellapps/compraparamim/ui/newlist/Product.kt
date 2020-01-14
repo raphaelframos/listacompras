@@ -12,6 +12,11 @@ class Product {
         this.name = name
     }
 
+    constructor(name: String, amount: Int){
+        this.name = name
+        this.amount = amount
+    }
+
     fun map() : HashMap<String, Any> {
         var map = HashMap<String, Any>()
         map.put("name", name)

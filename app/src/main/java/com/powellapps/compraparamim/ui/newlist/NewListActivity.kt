@@ -16,6 +16,7 @@ import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.ui.mylist.Shopping
 import com.powellapps.compraparamim.utils.ConstantsUtils
+import com.powellapps.compraparamim.utils.Utils
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,24 +40,30 @@ class NewListActivity : AppCompatActivity() {
         recyclerViewProducts.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         val viewModel = ViewModelProviders.of(this).get(ViewModelNewList::class.java)
-        viewModel.getProducts("1").observe(this, Observer {
-            adapter.update(it)
-            setNames(it)
-        })
+
 
         val shopping = Shopping()
         shopping.adminUser = "1"
         shopping.date = Date().time
         shopping.name = name
 
-        val shoppingId = FirebaseRepository().save("1", shopping)
+        val id = FirebaseRepository().save("1", shopping)
+        id?.let {
+            viewModel.getProducts("1", it).observe(this, Observer {
+                adapter.update(it)
+                setNames(it)
+            })
+        }
+
+
 
         val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
         imageButtonSend.setOnClickListener({
 
             val name = editTextName.text.toString()
             val product = Product(name)
-            FirebaseRepository().save("1", shoppingId, product)
+
+            id?.let { it1 -> FirebaseRepository().save("1", it1, product) }
             editTextName.setText("")
 
         })

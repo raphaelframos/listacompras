@@ -3,17 +3,18 @@ package com.powellapps.compraparamim.ui.mylist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.powellapps.compraparamim.repository.FirebaseRepository
+import com.powellapps.compraparamim.utils.Utils
 
 class MyListViewModel : ViewModel() {
 
-    private val shoppingList = MutableLiveData<List<Shopping>>().apply {
+    private var list = MutableLiveData<List<Shopping>>()
 
-        var list = ArrayList<Shopping>()
-        list.add(Shopping())
-        list.add(Shopping())
-        list.add(Shopping())
-        list.add(Shopping())
-        value = list
+    fun getList(id: String) : LiveData<List<Shopping>> {
+        FirebaseRepository().getLists(id).addSnapshotListener {value, _ ->
+            list.value = value?.toObjects(Shopping::class.java)
+        }
+
+        return list
     }
-    val list: LiveData<List<Shopping>> = shoppingList
 }

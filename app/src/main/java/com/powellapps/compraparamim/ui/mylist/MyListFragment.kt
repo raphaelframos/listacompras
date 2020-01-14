@@ -34,7 +34,7 @@ class MyListFragment : Fragment() {
         recyclerView.adapter = adapter
 
 
-        myListViewModel.list.observe(this, Observer {
+        myListViewModel.getList("1").observe(this, Observer {
             adapter.update(it)
         })
 

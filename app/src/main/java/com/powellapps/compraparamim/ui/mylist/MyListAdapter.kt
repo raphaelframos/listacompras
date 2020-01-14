@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
+import com.powellapps.compraparamim.utils.Utils
+import java.util.*
 
 class MyListAdapter() : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
 
@@ -38,7 +40,7 @@ class MyListAdapter() : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
 
         fun bind(shopping: Shopping) {
             textViewNumber.text = shopping.name
-            textViewDate.text = "" + shopping.date
+            textViewDate.text = Utils().formatDate(Date(shopping.date))
         }
 
     }

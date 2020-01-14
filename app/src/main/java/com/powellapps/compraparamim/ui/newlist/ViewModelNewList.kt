@@ -12,8 +12,9 @@ class ViewModelNewList : ViewModel() {
 
     private var products : MutableLiveData<List<Product>> = MutableLiveData()
 
-    fun getProducts(id: String) : LiveData<List<Product>> {
-        FirebaseRepository().getProducts(id).addSnapshotListener { value, e ->
+    fun getProducts(id: String, shoppingId: String) : LiveData<List<Product>> {
+
+        FirebaseRepository().getProducts(id, shoppingId).addSnapshotListener { value, e ->
             if (value != null) {
                 products.value = value.toObjects(Product::class.java)
             }

@@ -48,15 +48,15 @@ class ListsActivity : AppCompatActivity() {
             startActivity(it)
         })
 
-        myListViewModel.list.observe(this, Observer {
+        myListViewModel.getList("1").observe(this, Observer {
             adapter.update(it)
         })
 
-        myListViewModel.list.observe(this, Observer {
+        myListViewModel.getList("1").observe(this, Observer {
             adapterShared.update(it)
         })
 
-        myListViewModel.list.observe(this, Observer {
+        myListViewModel.getList("1").observe(this, Observer {
             adapterProducts.update(it)
         })
     }
