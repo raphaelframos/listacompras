@@ -17,6 +17,7 @@ import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.ui.mylist.Shopping
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
+import com.powellapps.compraparamim.viewmodel.ProductViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -40,6 +41,11 @@ class NewListActivity : AppCompatActivity() {
         recyclerViewProducts.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         val viewModel = ViewModelProviders.of(this).get(ViewModelNewList::class.java)
+        val viewModelNames = ViewModelProviders.of(this).get(ProductViewModel::class.java)
+
+        viewModelNames.getProducts("1").observe(this, Observer {
+            setNames(it)
+        })
 
 
         val shopping = Shopping()
@@ -51,7 +57,6 @@ class NewListActivity : AppCompatActivity() {
         id?.let {
             viewModel.getProducts("1", it).observe(this, Observer {
                 adapter.update(it)
-                setNames(it)
             })
         }
 
@@ -69,11 +74,11 @@ class NewListActivity : AppCompatActivity() {
         })
     }
 
-    fun setNames(it: List<Product>) {
+    fun setNames(it: List<String>) {
         var names = ArrayList<String>()
         it.forEach {
-            if(!names.contains(it.name)){
-                names.add(it.name)
+            if(!names.contains(it)){
+                names.add(it)
             }
         }
         val adapter = ArrayAdapter<String>(
