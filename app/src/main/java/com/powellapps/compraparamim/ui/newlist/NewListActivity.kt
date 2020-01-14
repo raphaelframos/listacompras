@@ -23,18 +23,16 @@ import kotlin.collections.ArrayList
 
 class NewListActivity : AppCompatActivity() {
 
+    private var id : String? = ""
     var adapter = ProductAdapter()
     lateinit var editTextName : AutoCompleteTextView
+    var shopping : Shopping = Shopping()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_list)
 
         editTextName = findViewById(R.id.textInputEditText_name)
-
-        val newPosition = intent.getIntExtra(ConstantsUtils.POSITION.name, 1) + 1
-        val name : String = "#" + newPosition.toString()
-        supportActionBar?.title = name
         val recyclerViewProducts = findViewById<RecyclerView>(R.id.recyclerView_products)
         recyclerViewProducts.layoutManager = LinearLayoutManager(this)
         recyclerViewProducts.adapter = adapter
@@ -43,22 +41,33 @@ class NewListActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(ViewModelNewList::class.java)
         val viewModelNames = ViewModelProviders.of(this).get(ProductViewModel::class.java)
 
+
+
+        if(isNew()){
+            val newPosition = intent.getIntExtra(ConstantsUtils.POSITION.name, 1) + 1
+            val name : String = "#" + newPosition.toString()
+            supportActionBar?.title = name
+            shopping = Shopping()
+            shopping.date = Date().time
+            shopping.name = name
+            shopping.adminUser = "1"
+            id = FirebaseRepository().save("1", shopping)
+            id?.let {
+                viewModel.getProducts("1", it).observe(this, Observer {
+                    adapter.update(it)
+                })
+            }
+        }else{
+            getShoppingIfExists()
+            supportActionBar?.title = shopping!!.name
+        }
+
+
+
         viewModelNames.getProducts("1").observe(this, Observer {
             setNames(it)
         })
 
-
-        val shopping = Shopping()
-        shopping.adminUser = "1"
-        shopping.date = Date().time
-        shopping.name = name
-
-        val id = FirebaseRepository().save("1", shopping)
-        id?.let {
-            viewModel.getProducts("1", it).observe(this, Observer {
-                adapter.update(it)
-            })
-        }
 
 
 
@@ -72,6 +81,18 @@ class NewListActivity : AppCompatActivity() {
             editTextName.setText("")
 
         })
+    }
+
+    private fun getShoppingIfExists() {
+
+        val value = intent.getSerializableExtra(ConstantsUtils.SHOPPING.name)
+        value.let {
+            shopping = it as Shopping
+        }
+    }
+
+    fun isNew() : Boolean {
+        return intent.getSerializableExtra(ConstantsUtils.SHOPPING.name) == null
     }
 
     fun setNames(it: List<String>) {

@@ -50,6 +50,10 @@
         android:text="Produtos mais comprados"
         android:textSize="20sp"></TextView>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_products_most_used_products"
         android:layout_width="match_parent"
@@ -58,13 +62,12 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton_new_list"
             android:layout_gravity="right|bottom"
+            android:src="@drawable/ic_action_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:padding="5dp"
             android:layout_margin="16dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>

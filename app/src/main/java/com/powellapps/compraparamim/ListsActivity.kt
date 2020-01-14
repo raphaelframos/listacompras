@@ -3,13 +3,13 @@ package com.powellapps.compraparamim
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.powellapps.compraparamim.ui.mylist.MyListAdapter
+import com.powellapps.compraparamim.adapter.ProductNameAdapter
+import com.powellapps.compraparamim.adapter.MyListAdapter
 import com.powellapps.compraparamim.ui.mylist.MyListViewModel
 import com.powellapps.compraparamim.ui.newlist.NewListActivity
 import com.powellapps.compraparamim.utils.ConstantsUtils
@@ -19,15 +19,19 @@ class ListsActivity : AppCompatActivity() {
 
     private lateinit var myListViewModel: MyListViewModel
     private lateinit var productViewModel : ProductViewModel
-    private var adapter = MyListAdapter()
-    private var adapterShared = MyListAdapter()
-    private var adapterProducts = ProductNameAdapter()
+    private lateinit var adapter : MyListAdapter
+    private var adapterShared =
+        MyListAdapter(this)
+    private var adapterProducts =
+        ProductNameAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lists)
 
-        supportActionBar?.elevation = 0F
+       // supportActionBar?.elevation = 0F
+        adapter = MyListAdapter(this)
+
         myListViewModel = ViewModelProviders.of(this).get(MyListViewModel::class.java)
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
 

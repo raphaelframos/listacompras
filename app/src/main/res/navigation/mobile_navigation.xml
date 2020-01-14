@@ -5,11 +5,6 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_my_list">
 
-    <fragment
-        android:id="@+id/navigation_my_list"
-        android:name="com.powellapps.compraparamim.ui.mylist.MyListFragment"
-        android:label="@string/minhas_listas"
-        tools:layout="@layout/fragment_my_list" />
 
     <fragment
         android:id="@+id/navigation_shared"

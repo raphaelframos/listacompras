@@ -1,15 +1,20 @@
-package com.powellapps.compraparamim.ui.mylist
+package com.powellapps.compraparamim.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
+import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.ui.newlist.NewListActivity
+import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
 import java.util.*
 
-class MyListAdapter() : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
+class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
 
     var shoppingList: List<Shopping> = emptyList()
 
@@ -25,6 +30,11 @@ class MyListAdapter() : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val shopping = shoppingList.get(position)
         holder.bind(shopping)
+        holder.itemView.setOnClickListener({
+            val it = Intent(context, NewListActivity::class.java)
+            it.putExtra(ConstantsUtils.SHOPPING.name, shopping)
+            context.startActivity(it)
+        })
 
     }
 

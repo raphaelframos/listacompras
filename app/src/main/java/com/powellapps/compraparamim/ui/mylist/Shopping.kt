@@ -1,8 +1,9 @@
 package com.powellapps.compraparamim.ui.mylist
 
 import com.google.firebase.firestore.DocumentId
+import java.io.Serializable
 
-class Shopping {
+class Shopping : Serializable {
 
     var name = ""
     var date : Long = 0
