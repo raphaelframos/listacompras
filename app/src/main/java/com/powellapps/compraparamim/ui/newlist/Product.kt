@@ -25,5 +25,11 @@ class Product {
         return map
     }
 
+    fun nameMap() : HashMap<String, String> {
+        var map = HashMap<String, String>()
+        map.put("name", name)
+        return map
+    }
+
 
 }

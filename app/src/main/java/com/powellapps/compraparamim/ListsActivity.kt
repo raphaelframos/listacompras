@@ -3,23 +3,25 @@ package com.powellapps.compraparamim
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.powellapps.compraparamim.ui.mylist.MyListAdapter
 import com.powellapps.compraparamim.ui.mylist.MyListViewModel
 import com.powellapps.compraparamim.ui.newlist.NewListActivity
 import com.powellapps.compraparamim.utils.ConstantsUtils
+import com.powellapps.compraparamim.viewmodel.ProductViewModel
 
 class ListsActivity : AppCompatActivity() {
 
     private lateinit var myListViewModel: MyListViewModel
+    private lateinit var productViewModel : ProductViewModel
     private var adapter = MyListAdapter()
     private var adapterShared = MyListAdapter()
-    private var adapterProducts = MyListAdapter()
+    private var adapterProducts = ProductNameAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,7 @@ class ListsActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0F
         myListViewModel = ViewModelProviders.of(this).get(MyListViewModel::class.java)
+        productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView_myList)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -56,7 +59,7 @@ class ListsActivity : AppCompatActivity() {
             adapterShared.update(it)
         })
 
-        myListViewModel.getList("1").observe(this, Observer {
+        productViewModel.getProducts("1").observe(this, Observer {
             adapterProducts.update(it)
         })
     }

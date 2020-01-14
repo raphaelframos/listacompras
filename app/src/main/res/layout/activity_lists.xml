@@ -17,12 +17,12 @@
         android:textSize="20sp"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginLeft="5dp"
         android:id="@+id/recyclerView_myList"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:layout_width="match_parent"
@@ -34,12 +34,12 @@
         android:textSize="20sp"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginLeft="5dp"
         android:id="@+id/recyclerView_sharedList"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:layout_width="match_parent"
@@ -51,12 +51,12 @@
         android:textSize="20sp"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginLeft="5dp"
         android:id="@+id/recyclerView_products_most_used_products"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
 
     <FrameLayout
         android:layout_width="match_parent"
