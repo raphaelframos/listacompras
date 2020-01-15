@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.adapter.ProductAdapter
 import com.powellapps.compraparamim.repository.FirebaseRepository
@@ -47,7 +49,7 @@ class NewListActivity : AppCompatActivity() {
             shopping = Shopping()
             shopping.date = Date().time
             shopping.name = name
-            shopping.adminUser = "1"
+            shopping.adminUser = FirebaseRepository().getUserId()
             val id = FirebaseRepository().save(FirebaseRepository().getUserId(), shopping)
             if (id != null) {
                 shopping.documentId = id
@@ -69,19 +71,25 @@ class NewListActivity : AppCompatActivity() {
             setNames(it)
         })
 
-
-
-
         val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
         imageButtonSend.setOnClickListener({
 
             val name = editTextName.text.toString()
             val product = Product(name)
 
-            FirebaseRepository().save("1", shopping.documentId, product)
+            FirebaseRepository().save(FirebaseRepository().getUserId(), shopping.documentId, product)
             editTextName.setText("")
 
         })
+
+    }
+
+    fun showSnackbar(){
+        val snack = Snackbar.make(editTextName, "O produto " + "foi removido. Deseja cancelar a exclusão?", Snackbar.LENGTH_LONG)
+        snack.setAction(getString(R.string.cancelar), View.OnClickListener {
+            System.out.println("Snackbar Set Action - OnClick.")
+        })
+        snack.show()
     }
 
     private fun getShoppingIfExists() {
@@ -126,5 +134,11 @@ class NewListActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        FirebaseRepository().removeShopping(FirebaseRepository().getUserId(), shopping.documentId)
+        super.onBackPressed()
+
     }
 }

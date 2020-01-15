@@ -47,5 +47,9 @@ class FirebaseRepository {
         return "1"
     }
 
+    fun removeShopping(userId: String, documentId: String) {
+        getDB().collection(LISTS).document(userId).collection(MY).document(documentId).delete()
+    }
+
 
 }
