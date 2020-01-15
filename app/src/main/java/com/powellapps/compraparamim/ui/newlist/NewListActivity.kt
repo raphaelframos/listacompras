@@ -137,8 +137,12 @@ class NewListActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        FirebaseRepository().removeShopping(FirebaseRepository().getUserId(), shopping.documentId)
+        if(adapter.products.size == 0) {
+            FirebaseRepository().removeShopping(
+                FirebaseRepository().getUserId(),
+                shopping.documentId
+            )
+        }
         super.onBackPressed()
-
     }
 }
