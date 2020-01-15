@@ -1,10 +1,14 @@
 package com.powellapps.compraparamim.ui.newlist
 
+import com.google.firebase.firestore.DocumentId
+
 class Product {
 
     var amount = 1
     var name = ""
     var purchased = false
+    @DocumentId
+    var documentId = ""
 
     constructor(){}
 

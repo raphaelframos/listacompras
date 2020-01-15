@@ -13,17 +13,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
+import com.powellapps.compraparamim.adapter.ProductAdapter
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.ui.mylist.Shopping
 import com.powellapps.compraparamim.utils.ConstantsUtils
-import com.powellapps.compraparamim.utils.Utils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
 class NewListActivity : AppCompatActivity() {
 
-    private var id : String? = ""
     var adapter = ProductAdapter()
     lateinit var editTextName : AutoCompleteTextView
     var shopping : Shopping = Shopping()
@@ -41,8 +40,6 @@ class NewListActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(ViewModelNewList::class.java)
         val viewModelNames = ViewModelProviders.of(this).get(ProductViewModel::class.java)
 
-
-
         if(isNew()){
             val newPosition = intent.getIntExtra(ConstantsUtils.POSITION.name, 1) + 1
             val name : String = "#" + newPosition.toString()
@@ -51,20 +48,24 @@ class NewListActivity : AppCompatActivity() {
             shopping.date = Date().time
             shopping.name = name
             shopping.adminUser = "1"
-            id = FirebaseRepository().save("1", shopping)
-            id?.let {
-                viewModel.getProducts("1", it).observe(this, Observer {
-                    adapter.update(it)
-                })
+            val id = FirebaseRepository().save(FirebaseRepository().getUserId(), shopping)
+            if (id != null) {
+                shopping.documentId = id
             }
         }else{
             getShoppingIfExists()
             supportActionBar?.title = shopping!!.name
+            viewModel.getProducts(FirebaseRepository().getUserId(), shoppingId = shopping.documentId).observe(this, Observer {
+                adapter.update(it, shopping)
+            })
         }
 
 
+        viewModel.getProducts(FirebaseRepository().getUserId(), shopping.documentId).observe(this, Observer {
+            adapter.update(it, shopping)
+        })
 
-        viewModelNames.getProducts("1").observe(this, Observer {
+        viewModelNames.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
             setNames(it)
         })
 
@@ -77,7 +78,7 @@ class NewListActivity : AppCompatActivity() {
             val name = editTextName.text.toString()
             val product = Product(name)
 
-            id?.let { it1 -> FirebaseRepository().save("1", it1, product) }
+            FirebaseRepository().save("1", shopping.documentId, product)
             editTextName.setText("")
 
         })

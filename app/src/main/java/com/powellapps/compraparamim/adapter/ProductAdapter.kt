@@ -1,4 +1,4 @@
-package com.powellapps.compraparamim.ui.newlist
+package com.powellapps.compraparamim.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,14 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
+import com.powellapps.compraparamim.repository.FirebaseRepository
+import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.ui.newlist.Product
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
-    var products = emptyList<Product>()
+    var products = mutableListOf<Product>()
+    lateinit var shopping: Shopping
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_product,parent, false)
@@ -23,10 +27,17 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(products[position])
+        holder.itemView.setOnLongClickListener{
+            FirebaseRepository().remove(FirebaseRepository().getUserId(), shopping.documentId, products[position])
+        //    products.removeAt(position)
+       //     notifyItemChanged(position)
+            true
+        }
     }
 
-    fun update(it: List<Product>) {
-        this.products = it
+    fun update(it: List<Product>, shopping: Shopping) {
+        this.products = it as MutableList<Product>
+        this.shopping = shopping
         notifyDataSetChanged()
     }
 
@@ -40,6 +51,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
             textViewAmount.text = ""+product.amount
             textViewName.text = product.name
             checkBoxBought.isChecked = product.purchased
+            com.powellapps.compraparamim.utils.Utils().show("Teste " + product.documentId)
         }
 
     }
