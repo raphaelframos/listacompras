@@ -2,5 +2,5 @@ package com.powellapps.compraparamim.utils
 
 enum class ConstantsUtils {
 
-    ID, POSITION, SHOPPING
+    ID, POSITION, SHOPPING, DOCUMENT_ID
 }

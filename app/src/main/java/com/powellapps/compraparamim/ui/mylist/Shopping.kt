@@ -10,6 +10,8 @@ class Shopping : Serializable {
     var adminUser = ""
     @DocumentId
     var documentId = ""
+    var shareId = ""
+    var sharePassword = ""
 
     fun map() : HashMap<String, Any>{
         val map = HashMap<String, Any>()
@@ -19,7 +21,12 @@ class Shopping : Serializable {
         return map
     }
 
-
+    fun shareMap(): MutableMap<String, Any> {
+        var map = HashMap<String, Any>()
+        map.put("shareId", shareId)
+        map.put("sharePassword", sharePassword)
+        return map
+    }
 
 
 }

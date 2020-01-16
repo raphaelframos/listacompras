@@ -17,26 +17,23 @@ class FirebaseRepository {
         return FirebaseFirestore.getInstance()
     }
 
-    fun getLists(id: String): CollectionReference {
-        return getDB().collection(LISTS).document(id).collection(MY)
-    }
     fun getProducts(id: String, shoppingId: String): CollectionReference {
-        return getDB().collection(LISTS).document(id).collection(MY).document(shoppingId).collection(PRODUCTS)
+        return getLists(id).document(shoppingId).collection(PRODUCTS)
     }
 
     fun save(adminId: String, shopping: Shopping): String? {
-        val ref =  getDB().collection(LISTS).document(adminId).collection(MY).document()
+        val ref =  getLists(adminId).document()
         ref.set(shopping)
         return ref.id
     }
 
     fun save(adminId: String, shoppingId : String, product: Product) {
-        getDB().collection(LISTS).document(adminId).collection(MY).document(shoppingId).collection(PRODUCTS).add(product)
+        getLists(adminId).document(shoppingId).collection(PRODUCTS).add(product)
         getDB().collection(USERS).document(adminId).collection(PRODUCTS).add(product.nameMap())
     }
 
     fun remove(adminId: String, shoppingId : String, product: Product) {
-        getDB().collection(LISTS).document(adminId).collection(MY).document(shoppingId).collection(PRODUCTS).document(product.documentId).delete()
+        getLists(adminId).document(shoppingId).collection(PRODUCTS).document(product.documentId).delete()
     }
 
     fun getMostProducts(adminId: String): CollectionReference {
@@ -48,7 +45,14 @@ class FirebaseRepository {
     }
 
     fun removeShopping(userId: String, documentId: String) {
-        getDB().collection(LISTS).document(userId).collection(MY).document(documentId).delete()
+        getLists(userId).document(documentId).delete()
+    }
+
+    fun getLists(adminId: String) =
+        getDB().collection(LISTS).document(adminId).collection(MY)
+
+    fun updateShare(id: String, shopping: Shopping) {
+        getLists(id).document(shopping.documentId).update(shopping.shareMap())
     }
 
 

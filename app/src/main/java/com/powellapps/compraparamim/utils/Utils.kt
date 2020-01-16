@@ -24,5 +24,10 @@ class Utils {
         return format.format(date)
     }
 
+    fun generateId(s: String): String {
+        val id = (1..3).map { s.random() }.joinToString("")
+        return id.toLowerCase()
+    }
+
 
 }

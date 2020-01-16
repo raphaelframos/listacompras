@@ -59,7 +59,7 @@ class NewListActivity : AppCompatActivity() {
             }
         }else{
             getShoppingIfExists()
-            supportActionBar?.title = shopping!!.name
+            supportActionBar?.title = shopping.name
             viewModel.getProducts(FirebaseRepository().getUserId(), shoppingId = shopping.documentId).observe(this, Observer {
                 adapter.update(it, shopping)
             })
@@ -88,6 +88,8 @@ class NewListActivity : AppCompatActivity() {
                     product
                 )
                 editTextName.setText("")
+            }else{
+                editTextName.setError(getString(R.string.campo_branco))
             }
 
         })
@@ -140,7 +142,7 @@ class NewListActivity : AppCompatActivity() {
             when(item.itemId){
                 R.id.item_share -> {
                     ShareListFragment.newInstance(
-                        FirebaseRepository().getUserId()
+                        FirebaseRepository().getUserId(), shopping
                     ).show(supportFragmentManager, "share")
                 }
             }

@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".ui.newlist.ShareListFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        app:title="Compartilhamento"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></androidx.appcompat.widget.Toolbar>
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
@@ -25,7 +32,7 @@
         android:text="Palavra Chave" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView_user_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1"
@@ -48,5 +55,6 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center_horizontal"/>
+
 
 </LinearLayout>
