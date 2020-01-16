@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.ui.mylist.Shopping
-import com.powellapps.compraparamim.ui.newlist.NewListActivity
+import com.powellapps.compraparamim.NewListActivity
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
 import java.util.*

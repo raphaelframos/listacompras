@@ -11,7 +11,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.powellapps.compraparamim.adapter.ProductNameAdapter
 import com.powellapps.compraparamim.adapter.MyListAdapter
 import com.powellapps.compraparamim.ui.mylist.MyListViewModel
-import com.powellapps.compraparamim.ui.newlist.NewListActivity
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 
