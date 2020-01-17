@@ -10,7 +10,7 @@
         android:id="@+id/navigation_shared"
         android:name="com.powellapps.compraparamim.ui.shared.SharedListFragment"
         android:label="Compartilhadas"
-        tools:layout="@layout/fragment_sharedlist" />
+        tools:layout="@layout/fragment_search_list" />
 
 
 </navigation>

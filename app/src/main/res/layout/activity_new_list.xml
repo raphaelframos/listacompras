@@ -54,6 +54,7 @@
                     android:layout_weight="1">
 
                     <AutoCompleteTextView
+                        android:inputType="textCapWords"
                         android:maxLines="1"
                         android:id="@+id/textInputEditText_name"
                         android:layout_width="match_parent"

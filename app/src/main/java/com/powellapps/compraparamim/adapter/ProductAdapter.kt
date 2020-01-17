@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.ui.newlist.Product
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
@@ -51,7 +51,6 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
             textViewAmount.text = ""+product.amount
             textViewName.text = product.name
             checkBoxBought.isChecked = product.purchased
-            com.powellapps.compraparamim.utils.Utils().show("Teste " + product.documentId)
         }
 
     }

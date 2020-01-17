@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
-import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.NewListActivity
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
@@ -49,7 +49,7 @@ class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.V
         val textViewDate : TextView = itemView.findViewById(R.id.textView_date)
 
         fun bind(shopping: Shopping) {
-            textViewNumber.text = shopping.name
+            textViewNumber.text = shopping.nameFormat()
             textViewDate.text = Utils().formatDate(Date(shopping.date))
         }
 

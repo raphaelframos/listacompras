@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.newlist.ShareListFragment">
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         app:title="Compartilhamento"
@@ -21,7 +20,7 @@
         android:layout_margin="5dp"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="Para compartilhar esta lista de compras mostre sua palavra chave e a senha."
+        android:text="Para encontrar uma lista de compras digite sua palavra chave e a senha."
         android:textStyle="bold" />
 
     <TextView
@@ -31,13 +30,18 @@
         android:layout_height="wrap_content"
         android:text="Palavra Chave" />
 
-    <TextView
-        android:id="@+id/textView_user_id"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Palavra Chave" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <TextView
         android:layout_marginTop="10dp"
@@ -46,13 +50,23 @@
         android:layout_height="wrap_content"
         android:text="Senha" />
 
-    <TextView
-        android:id="@+id/textView_password"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/senha" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/button_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
+        android:text="Seguir" />
 
 
 </LinearLayout>

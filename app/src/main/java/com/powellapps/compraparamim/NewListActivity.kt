@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
 import com.powellapps.compraparamim.adapter.ProductAdapter
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.ui.newlist.Product
 import com.powellapps.compraparamim.ui.newlist.ShareListFragment
 import com.powellapps.compraparamim.ui.newlist.ViewModelNewList
@@ -30,7 +31,8 @@ class NewListActivity : AppCompatActivity() {
 
     var adapter = ProductAdapter()
     lateinit var editTextName : AutoCompleteTextView
-    var shopping : Shopping = Shopping()
+    var shopping : Shopping =
+        Shopping()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,26 +49,23 @@ class NewListActivity : AppCompatActivity() {
 
         if(isNew()){
             val newPosition = intent.getIntExtra(ConstantsUtils.POSITION.name, 1) + 1
-            val name : String = "#" + newPosition.toString()
-            supportActionBar?.title = name
             shopping = Shopping()
-            shopping.date = Date().time
-            shopping.name = name
-            shopping.adminUser = FirebaseRepository().getUserId()
-            val id = FirebaseRepository().save(FirebaseRepository().getUserId(), shopping)
+            shopping.name = newPosition
+            shopping.userId = FirebaseRepository().getUserId()
+            val id = FirebaseRepository().saveShopping(shopping)
             if (id != null) {
                 shopping.documentId = id
             }
         }else{
             getShoppingIfExists()
-            supportActionBar?.title = shopping.name
-            viewModel.getProducts(FirebaseRepository().getUserId(), shoppingId = shopping.documentId).observe(this, Observer {
+            viewModel.getProducts(shoppingId = shopping.documentId).observe(this, Observer {
                 adapter.update(it, shopping)
             })
         }
 
 
-        viewModel.getProducts(FirebaseRepository().getUserId(), shopping.documentId).observe(this, Observer {
+        supportActionBar?.title = shopping.nameFormat()
+        viewModel.getProducts(shopping.documentId).observe(this, Observer {
             adapter.update(it, shopping)
         })
 
@@ -82,9 +81,8 @@ class NewListActivity : AppCompatActivity() {
                 val amount = spinner_amount.selectedItem as String
                 val product = Product(name)
                 product.amount = amount.toInt()
-                FirebaseRepository().save(
-                    FirebaseRepository().getUserId(),
-                    shopping.documentId,
+                FirebaseRepository().saveProduct(
+                    shopping,
                     product
                 )
                 editTextName.setText("")

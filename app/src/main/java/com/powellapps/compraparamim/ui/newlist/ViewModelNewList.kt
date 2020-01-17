@@ -3,21 +3,18 @@ package com.powellapps.compraparamim.ui.newlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.QuerySnapshot
+import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.utils.Utils
 
 class ViewModelNewList : ViewModel() {
 
     private var products : MutableLiveData<List<Product>> = MutableLiveData()
 
-    fun getProducts(id: String, shoppingId: String) : LiveData<List<Product>> {
+    fun getProducts(shoppingId: String) : LiveData<List<Product>> {
 
-        FirebaseRepository().getProducts(id, shoppingId).addSnapshotListener { value, e ->
-            if (value != null) {
-                products.value = value.toObjects(Product::class.java)
-            }
+        FirebaseRepository().getProducts(shoppingId).addSnapshotListener{snapshot, e ->
+            products.value = snapshot?.toObject(Shopping::class.java)!!.products
         }
 
         return products

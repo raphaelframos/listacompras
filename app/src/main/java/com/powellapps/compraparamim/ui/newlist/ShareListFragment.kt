@@ -2,7 +2,6 @@ package com.powellapps.compraparamim.ui.newlist
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -10,11 +9,9 @@ import androidx.fragment.app.DialogFragment
 
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.ui.mylist.Shopping
+import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
-import kotlinx.android.synthetic.main.fragment_share_list.*
-import org.w3c.dom.Text
 
 /**
  * A simple [Fragment] subclass.

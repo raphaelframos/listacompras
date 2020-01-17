@@ -1,8 +1,9 @@
 package com.powellapps.compraparamim.ui.newlist
 
 import com.google.firebase.firestore.DocumentId
+import java.io.Serializable
 
-class Product {
+class Product : Serializable{
 
     var amount = 1
     var name = ""
