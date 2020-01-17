@@ -1,4 +1,4 @@
-package com.powellapps.compraparamim.ui.newlist
+package com.powellapps.compraparamim.fragment
 
 import android.os.Bundle
 import android.view.*
@@ -38,29 +38,48 @@ class ShareListFragment : DialogFragment() {
         toolbar.setOnMenuItemClickListener({
             when(it.itemId){
                 R.id.item_renew -> {
-                    val sharePassword = Utils().generateRandomPassword()
-                    val shareId = Utils().generateId(FirebaseRepository().getUserId())
-                    shopping.shareId = shareId
-                    shopping.sharePassword = sharePassword
-                    showShare(textViewUserId, shopping)
-                    if (userId != null) {
-                        FirebaseRepository().updateShare(userId, shopping)
-                    }
+                    initShare(shopping, textViewUserId, userId)
                 }
             }
 
             true
         })
-        showShare(textViewUserId, shopping)
+        showShare(textViewUserId, shopping, userId)
         setHasOptionsMenu(true)
+    }
+
+    private fun initShare(
+        shopping: Shopping,
+        textViewUserId: TextView?,
+        userId: String?
+    ) {
+        val result = generateShare()
+        shopping.shareId = result.first
+        shopping.sharePassword = result.second
+        showShare(textViewUserId, shopping, userId)
+        if (userId != null) {
+            FirebaseRepository().updateShare(shopping)
+        }
+    }
+
+    private fun generateShare(): Pair<String, String> {
+        val sharePassword = Utils().generateRandomPassword()
+        val shareId = Utils().generateId(FirebaseRepository().getUserId())
+        return Pair(shareId, sharePassword)
     }
 
     private fun showShare(
         textViewUserId: TextView?,
-        shopping: Shopping
+        shopping: Shopping,
+        userId: String?
     ) {
-        textViewUserId?.text = shopping.shareId
-        textViewPassword.text = shopping.sharePassword
+        if(shopping.shareId.isEmpty() || shopping.sharePassword.isEmpty()){
+            initShare(shopping, textViewUserId, userId)
+        }else{
+            textViewUserId?.text = shopping.shareId
+            textViewPassword.text = shopping.sharePassword
+        }
+
     }
 
     companion object {
@@ -69,7 +88,8 @@ class ShareListFragment : DialogFragment() {
             val args = Bundle()
             args.putString(ConstantsUtils.ID.name, id)
             args.putSerializable(ConstantsUtils.SHOPPING.name, shopping)
-            val fragment = ShareListFragment()
+            val fragment =
+                ShareListFragment()
             fragment.arguments = args
             return fragment
         }

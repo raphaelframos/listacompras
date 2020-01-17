@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.powellapps.compraparamim.adapter.ProductNameAdapter
 import com.powellapps.compraparamim.adapter.MyListAdapter
+import com.powellapps.compraparamim.fragment.SearchListFragment
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.ui.mylist.MyListViewModel
+import com.powellapps.compraparamim.ui.mylist.ShareViewModel
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 
@@ -21,6 +23,7 @@ class ListsActivity : AppCompatActivity() {
 
     private lateinit var myListViewModel: MyListViewModel
     private lateinit var productViewModel : ProductViewModel
+    private lateinit var shareViewModel : ShareViewModel
     private lateinit var adapter : MyListAdapter
     private var adapterShared =
         MyListAdapter(this)
@@ -36,6 +39,7 @@ class ListsActivity : AppCompatActivity() {
 
         myListViewModel = ViewModelProviders.of(this).get(MyListViewModel::class.java)
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
+        shareViewModel = ViewModelProviders.of(this).get(ShareViewModel::class.java)
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView_myList)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -61,11 +65,11 @@ class ListsActivity : AppCompatActivity() {
             adapter.update(it)
         })
 
-     //   myListViewModel.getList("1").observe(this, Observer {
-   //         adapterShared.update(it)
-   //     })
+        shareViewModel.getShareIds(FirebaseRepository().getUserId()).observe(this, Observer {
 
-        productViewModel.getProducts("1").observe(this, Observer {
+        })
+
+        productViewModel.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
             adapterProducts.update(it)
         })
     }
@@ -79,7 +83,7 @@ class ListsActivity : AppCompatActivity() {
 
         when(item!!.itemId){
             R.id.item_search -> {
-
+                SearchListFragment().show(supportFragmentManager, "search")
             }
         }
         return super.onOptionsItemSelected(item)

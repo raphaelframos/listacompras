@@ -13,7 +13,7 @@ import com.powellapps.compraparamim.ui.newlist.Product
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
-    var products = mutableListOf<Product>()
+    var products = ArrayList<Product>()
     lateinit var shopping: Shopping
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,17 +26,19 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(products[position])
+        val product = products[position]
+        holder.bind(product)
         holder.itemView.setOnLongClickListener{
-            FirebaseRepository().remove(FirebaseRepository().getUserId(), shopping.documentId, products[position])
-        //    products.removeAt(position)
-       //     notifyItemChanged(position)
+            products.removeAt(position)
+            shopping.products = products
+            FirebaseRepository().removeProduct(shopping)
+            notifyItemChanged(position)
             true
         }
     }
 
     fun update(it: List<Product>, shopping: Shopping) {
-        this.products = it as MutableList<Product>
+        this.products = ArrayList(it)
         this.shopping = shopping
         notifyDataSetChanged()
     }

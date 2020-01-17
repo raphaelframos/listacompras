@@ -51,6 +51,7 @@ class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.V
         fun bind(shopping: Shopping) {
             textViewNumber.text = shopping.nameFormat()
             textViewDate.text = Utils().formatDate(Date(shopping.date))
+            Utils().show("ID " + shopping.documentId)
         }
 
     }

@@ -14,17 +14,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Timestamp
 import com.powellapps.compraparamim.adapter.ProductAdapter
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.ui.newlist.Product
-import com.powellapps.compraparamim.ui.newlist.ShareListFragment
+import com.powellapps.compraparamim.fragment.ShareListFragment
 import com.powellapps.compraparamim.ui.newlist.ViewModelNewList
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.activity_new_list.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class NewListActivity : AppCompatActivity() {
@@ -149,9 +147,8 @@ class NewListActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(adapter.products.size == 0) {
+        if(shopping.products.size == 0) {
             FirebaseRepository().removeShopping(
-                FirebaseRepository().getUserId(),
                 shopping.documentId
             )
         }

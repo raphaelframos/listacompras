@@ -20,6 +20,7 @@ class Shopping : Serializable {
     var shareId = ""
     var sharePassword = ""
     var products = ArrayList<Product>()
+    var shared = ArrayList<String>()
 
     constructor(){
         date = Date().time
@@ -31,6 +32,7 @@ class Shopping : Serializable {
         map.put("date", date)
         map.put("userId", userId)
         map.put("products", products)
+        map.put("shared", shared)
         return map
     }
 
@@ -41,12 +43,26 @@ class Shopping : Serializable {
         return map
     }
 
+
+    fun documentIdMap(): MutableMap<String, String> {
+        var map = HashMap<String, String>()
+        map.put("documentId", documentId)
+        return map
+    }
+
     fun add(product: Product){
         products.add(product)
     }
 
     fun nameFormat(): String {
         return "#" + name
+    }
+
+    fun add(userId: String) {
+        if(!shared.contains(userId)){
+            shared.add(userId)
+        }
+
     }
 
 

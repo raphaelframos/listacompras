@@ -14,7 +14,9 @@ class ViewModelNewList : ViewModel() {
     fun getProducts(shoppingId: String) : LiveData<List<Product>> {
 
         FirebaseRepository().getProducts(shoppingId).addSnapshotListener{snapshot, e ->
-            products.value = snapshot?.toObject(Shopping::class.java)!!.products
+            if(snapshot?.exists()!!) {
+                products.value = snapshot?.toObject(Shopping::class.java)!!.products
+            }
         }
 
         return products

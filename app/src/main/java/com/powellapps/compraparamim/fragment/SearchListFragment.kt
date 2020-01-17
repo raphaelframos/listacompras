@@ -8,7 +8,9 @@ import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.powellapps.compraparamim.R
+import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.repository.FirebaseRepository
+import com.powellapps.compraparamim.utils.Utils
 
 class SearchListFragment : DialogFragment() {
 
@@ -30,7 +32,13 @@ class SearchListFragment : DialogFragment() {
             val id = editTextId!!.text.toString()
             val password = editTextPassword!!.text.toString()
 
-          //  FirebaseRepository().
+            FirebaseRepository().getSharedShopping(id, password).addSnapshotListener{ snap, e ->
+                if(!snap?.isEmpty!!){
+                    val shopping = snap.toObjects(Shopping::class.java).get(0)
+                    FirebaseRepository().follow(FirebaseRepository().getUserId(), shopping)
+                }
+            }
+            buttonFollow.isEnabled = false
         })
     }
 }

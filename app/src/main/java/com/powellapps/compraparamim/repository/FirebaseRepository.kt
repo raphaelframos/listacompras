@@ -2,14 +2,15 @@ package com.powellapps.compraparamim.repository
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
+import com.powellapps.compraparamim.model.Share
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.ui.newlist.Product
+import com.powellapps.compraparamim.utils.Utils
 
 
 class FirebaseRepository {
 
     private val LISTS = "lists"
-    private val MY = "my"
     private val PRODUCTS = "products"
     private val USERS = "users"
     private val USER_ID = "userId"
@@ -35,20 +36,28 @@ class FirebaseRepository {
 
     fun getListsById(adminId: String): Query {
         val query = getLists().whereEqualTo(USER_ID, adminId)
-     //   query.orderBy("name", Query.Direction.DESCENDING)
         return query
     }
+
+    fun getSharedShopping(sharedId: String, sharedPassword: String): Query {
+        val query = getLists().whereEqualTo("shareId", sharedId).whereEqualTo("sharePassword", sharedPassword)
+        return query
+    }
+
+    fun getSharedIds(userId: String): Query {
+        val query = getShare().whereEqualTo("userId", userId)
+        return query
+    }
+
 
     fun getProducts(shoppingId: String): DocumentReference {
         return  getLists().document(shoppingId)
     }
 
-
-
-
-    fun remove(adminId: String, shoppingId : String, product: Product) {
-        getLists(adminId).document(shoppingId).collection(PRODUCTS).document(product.documentId).delete()
+    fun removeShopping(documentId: String) {
+        getLists().document(documentId).delete()
     }
+
 
     fun getMostProducts(adminId: String): CollectionReference {
         return getDB().collection(USERS).document(adminId).collection(PRODUCTS)
@@ -58,16 +67,24 @@ class FirebaseRepository {
         return "1"
     }
 
-    fun removeShopping(userId: String, documentId: String) {
-        getLists(userId).document(documentId).delete()
+    fun updateShare(shopping: Shopping) {
+        getLists().document(shopping.documentId).update(shopping.shareMap())
     }
 
-    fun getLists(adminId: String) =
-        getDB().collection(LISTS).document(adminId).collection(MY)
-
-    fun updateShare(id: String, shopping: Shopping) {
-        getLists(id).document(shopping.documentId).update(shopping.shareMap())
+    fun removeProduct(shopping: Shopping) {
+        getLists().document(shopping.documentId).update("products", shopping.products)
     }
+
+    fun follow(userId: String, shopping: Shopping) {
+        shopping.add(userId)
+        getLists().document(shopping.documentId).update("shared", shopping.shared)
+        val share = Share()
+        share.shoppingId = shopping.documentId
+        share.userId = userId
+        getShare().add(share)
+    }
+
+    private fun getShare() = getDB().collection("shared")
 
 
 }
