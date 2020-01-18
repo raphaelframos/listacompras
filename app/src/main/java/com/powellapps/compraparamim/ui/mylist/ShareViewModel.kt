@@ -38,7 +38,7 @@ class ShareViewModel : ViewModel() {
                     list.value = shoppings
 
                 }
-                
+
             }
 
         }

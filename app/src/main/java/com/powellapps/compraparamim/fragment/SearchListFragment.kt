@@ -39,6 +39,7 @@ class SearchListFragment : DialogFragment() {
                 }
             }
             buttonFollow.isEnabled = false
+            dismiss()
         })
     }
 }

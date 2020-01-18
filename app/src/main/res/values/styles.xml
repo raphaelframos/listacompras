@@ -8,4 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ButtonPrimary" parent="Widget.AppCompat.Button.Colored"></style>
+
 </resources>

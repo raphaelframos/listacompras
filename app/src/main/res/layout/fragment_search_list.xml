@@ -9,6 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         app:title="Compartilhamento"
         android:id="@+id/toolbar"
+        app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></androidx.appcompat.widget.Toolbar>
@@ -19,15 +20,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_condensed_bold"
         android:gravity="center_horizontal"
         android:text="Para encontrar uma lista de compras digite sua palavra chave e a senha."
         android:textStyle="bold" />
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:gravity="center_horizontal"
         android:text="Palavra Chave" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -43,12 +46,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <TextView
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:gravity="center_horizontal"
         android:text="Senha" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -64,11 +67,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        style="@style/ButtonPrimary"
         android:layout_marginTop="20dp"
         android:id="@+id/button_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Seguir" />
+
 
 
 </LinearLayout>
