@@ -36,6 +36,10 @@ class FirebaseRepository {
         getDB().collection(USERS).document(shopping.userId).collection(PRODUCTS).add(product.nameMap())
     }
 
+    fun updateProducts(shopping: Shopping) {
+        getLists().document(shopping.documentId).update(PRODUCTS, shopping.products)
+    }
+
     fun getListsById(adminId: String): Query {
         val query = getLists().whereEqualTo(USER_ID, adminId)
         return query
@@ -52,7 +56,7 @@ class FirebaseRepository {
     }
 
 
-    fun getProducts(shoppingId: String): DocumentReference {
+    fun getShopping(shoppingId: String): DocumentReference {
         return  getLists().document(shoppingId)
     }
 
@@ -66,7 +70,7 @@ class FirebaseRepository {
     }
 
     fun getUserId(): String {
-        return "1"
+        return "3"
     }
 
     fun updateShare(shopping: Shopping) {

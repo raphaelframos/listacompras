@@ -36,5 +36,25 @@ class Product : Serializable{
         return map
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Product
+
+        if (amount != other.amount) return false
+        if (name != other.name) return false
+        if (purchased != other.purchased) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = amount
+        result = 31 * result + name.hashCode()
+        result = 31 * result + purchased.hashCode()
+        return result
+    }
+
 
 }

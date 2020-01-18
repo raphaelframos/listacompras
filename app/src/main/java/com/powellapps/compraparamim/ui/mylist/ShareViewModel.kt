@@ -10,14 +10,29 @@ import com.powellapps.compraparamim.utils.Utils
 
 class ShareViewModel : ViewModel() {
 
-    private var list = MutableLiveData<List<Share>>()
+    private var list = MutableLiveData<List<Shopping>>()
 
-    fun getShareIds(userId : String) : LiveData<List<Share>> {
+    fun getShareShoppings(userId : String) : LiveData<List<Shopping>> {
+        var shoppings = ArrayList<Shopping>()
         FirebaseRepository().getSharedIds(userId).addSnapshotListener{ value, e ->
             if(value != null && value.documents.size > 0){
-                list.value = value.toObjects(Share::class.java)
+                val shareIds = value.toObjects(Share::class.java)
+                shareIds.forEach {
+                    val task = FirebaseRepository().getShopping(it.shoppingId).get()
+                    while (!task.isSuccessful){
+                    }
+                    val shop = task.result!!.toObject(Shopping::class.java)
+                    shop?.let { it1 ->
+                        if(!shoppings.contains(shop)){
+                            shoppings.add(it1)
+                        }
+
+                    }
+                }
+                list.value = shoppings
+                Utils().show("Share 2 " + shoppings)
             }
-            Utils().show("Share " + value!!.toObjects(Share::class.java))
+
         }
         return list
     }

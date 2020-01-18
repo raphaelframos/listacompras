@@ -26,16 +26,6 @@ class Shopping : Serializable {
         date = Date().time
     }
 
-    fun map() : HashMap<String, Any>{
-        val map = HashMap<String, Any>()
-        map.put("name", name)
-        map.put("date", date)
-        map.put("userId", userId)
-        map.put("products", products)
-        map.put("shared", shared)
-        return map
-    }
-
     fun shareMap(): MutableMap<String, Any> {
         var map = HashMap<String, Any>()
         map.put("shareId", shareId)
@@ -43,12 +33,6 @@ class Shopping : Serializable {
         return map
     }
 
-
-    fun documentIdMap(): MutableMap<String, String> {
-        var map = HashMap<String, String>()
-        map.put("documentId", documentId)
-        return map
-    }
 
     fun add(product: Product){
         products.add(product)
@@ -63,6 +47,26 @@ class Shopping : Serializable {
             shared.add(userId)
         }
 
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Shopping
+
+        if (name != other.name) return false
+        if (date != other.date) return false
+        if (userId != other.userId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name
+        result = 31 * result + date.hashCode()
+        result = 31 * result + userId.hashCode()
+        return result
     }
 
 
