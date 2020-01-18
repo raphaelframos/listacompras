@@ -1,9 +1,11 @@
 package com.powellapps.compraparamim.repository
 
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.powellapps.compraparamim.model.Share
 import com.powellapps.compraparamim.model.Shopping
+import com.powellapps.compraparamim.model.User
 import com.powellapps.compraparamim.ui.newlist.Product
 import com.powellapps.compraparamim.utils.Utils
 
@@ -15,7 +17,7 @@ class FirebaseRepository {
     private val USERS = "users"
     private val USER_ID = "userId"
 
-    private fun getDB(): FirebaseFirestore {
+     fun getDB(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }
 
@@ -82,6 +84,12 @@ class FirebaseRepository {
         share.shoppingId = shopping.documentId
         share.userId = userId
         getShare().add(share)
+    }
+
+    fun saveUser(user: User) {
+        val userfirebase = FirebaseAuth.getInstance().currentUser
+        val id = userfirebase!!.uid
+        FirebaseRepository().getDB().collection("users").document(id).set(user)
     }
 
     private fun getShare() = getDB().collection("shared")
