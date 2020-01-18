@@ -1,6 +1,9 @@
 package com.powellapps.compraparamim.utils
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.util.Log
+import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -27,6 +30,10 @@ class Utils {
     fun generateId(s: String): String {
         val id = (1..3).map { s.random() }.joinToString("")
         return id.toLowerCase()
+    }
+
+    fun Context.colorList(id: Int): ColorStateList {
+        return ColorStateList.valueOf(ContextCompat.getColor(this, id))
     }
 
 

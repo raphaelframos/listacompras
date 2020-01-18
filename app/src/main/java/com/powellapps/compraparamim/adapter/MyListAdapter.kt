@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.model.Shopping
@@ -14,7 +16,7 @@ import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
 import java.util.*
 
-class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
+class MyListAdapter(val context: Context, val isShared : Boolean) : RecyclerView.Adapter<MyListAdapter.ViewHolder>() {
 
     var shoppingList: List<Shopping> = emptyList()
 
@@ -36,6 +38,11 @@ class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.V
             context.startActivity(it)
         })
 
+        if(isShared){
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+        }else{
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green))
+        }
     }
 
     fun update(it: List<Shopping>) {
@@ -47,11 +54,11 @@ class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.V
 
         val textViewNumber : TextView = itemView.findViewById(R.id.textView_number)
         val textViewDate : TextView = itemView.findViewById(R.id.textView_date)
+        var cardView : CardView = itemView.findViewById(R.id.cardView_my_list)
 
         fun bind(shopping: Shopping) {
             textViewNumber.text = shopping.nameFormat()
             textViewDate.text = Utils().formatDate(Date(shopping.date))
-            Utils().show("ID " + shopping.documentId)
         }
 
     }

@@ -26,7 +26,7 @@ class ListsActivity : AppCompatActivity() {
     private lateinit var shareViewModel : ShareViewModel
     private lateinit var adapter : MyListAdapter
     private var adapterShared =
-        MyListAdapter(this)
+        MyListAdapter(this, true)
     private var adapterProducts =
         ProductNameAdapter()
 
@@ -35,7 +35,7 @@ class ListsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lists)
 
        // supportActionBar?.elevation = 0F
-        adapter = MyListAdapter(this)
+        adapter = MyListAdapter(this, false)
 
         myListViewModel = ViewModelProviders.of(this).get(MyListViewModel::class.java)
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)

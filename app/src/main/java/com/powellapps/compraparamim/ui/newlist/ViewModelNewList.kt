@@ -14,7 +14,8 @@ class ViewModelNewList : ViewModel() {
 
         FirebaseRepository().getShopping(shoppingId).addSnapshotListener{ snapshot, e ->
             if(snapshot?.exists()!!) {
-                products.value = snapshot?.toObject(Shopping::class.java)!!.products
+                var sortedList = snapshot?.toObject(Shopping::class.java)!!.products.sortedWith(compareBy({ it.name }))
+                products.value = sortedList
             }
         }
 

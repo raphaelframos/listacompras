@@ -20,7 +20,6 @@ class ShareViewModel : ViewModel() {
                 shareIds.forEach {
                     val task = FirebaseRepository().getShopping(it.shoppingId).get()
                     while (!task.isSuccessful){
-                        Utils().show("Teste")
                     }
                     val shop = task.result!!.toObject(Shopping::class.java)
                     shop?.let { it1 ->
