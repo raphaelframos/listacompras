@@ -43,7 +43,6 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
             products.add(product)
             shopping.products = products
             FirebaseRepository().updateProducts(shopping)
-       //     notifyItemChanged(position)
 
         }
     }

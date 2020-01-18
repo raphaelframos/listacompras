@@ -5,10 +5,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.NewListActivity
@@ -43,6 +46,10 @@ class MyListAdapter(val context: Context, val isShared : Boolean) : RecyclerView
         }else{
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green))
         }
+        Glide.with(context)
+            .load("https://s2.glbimg.com/hwnZJ0JIuEZUaS96o8We1f19C3o=/smart/e.glbimg.com/og/ed/f/original/2018/11/21/44622724_295246567994048_7341763530153746375_n.jpg")
+            .apply(RequestOptions.circleCropTransform())
+            .into(holder.imageView);
     }
 
     fun update(it: List<Shopping>) {
@@ -55,10 +62,12 @@ class MyListAdapter(val context: Context, val isShared : Boolean) : RecyclerView
         val textViewNumber : TextView = itemView.findViewById(R.id.textView_number)
         val textViewDate : TextView = itemView.findViewById(R.id.textView_date)
         var cardView : CardView = itemView.findViewById(R.id.cardView_my_list)
+        var imageView : ImageView = itemView.findViewById(R.id.imageView_photo)
 
         fun bind(shopping: Shopping) {
             textViewNumber.text = shopping.nameFormat()
             textViewDate.text = Utils().formatDate(Date(shopping.date))
+
         }
 
     }
