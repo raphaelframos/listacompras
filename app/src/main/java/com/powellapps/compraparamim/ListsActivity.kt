@@ -65,8 +65,8 @@ class ListsActivity : AppCompatActivity() {
             adapter.update(it)
         })
 
-        shareViewModel.getShareIds(FirebaseRepository().getUserId()).observe(this, Observer {
-
+        shareViewModel.getShareShoppings(FirebaseRepository().getUserId()).observe(this, Observer {
+            adapterShared.update(it)
         })
 
         productViewModel.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {

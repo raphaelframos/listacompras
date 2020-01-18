@@ -50,7 +50,7 @@ class FirebaseRepository {
     }
 
 
-    fun getProducts(shoppingId: String): DocumentReference {
+    fun getShopping(shoppingId: String): DocumentReference {
         return  getLists().document(shoppingId)
     }
 
