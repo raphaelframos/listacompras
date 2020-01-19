@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FieldValue
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Shopping
@@ -32,10 +30,7 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
         val product = products[position]
         holder.bind(product)
         holder.itemView.setOnLongClickListener{
-            products.removeAt(position)
-            shopping.products = products
-            FirebaseRepository().removeProduct(shopping)
-            notifyItemChanged(position)
+            FirebaseRepository().removeProduct(product)
             true
         }
 

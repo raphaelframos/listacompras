@@ -20,15 +20,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_condensed_bold"
         android:gravity="center_horizontal"
         android:text="Para compartilhar esta lista de compras mostre sua palavra chave e a senha."
         android:textStyle="bold" />
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:gravity="center_horizontal"
         android:text="Palavra Chave" />
 
     <TextView
@@ -40,10 +42,11 @@
         android:gravity="center_horizontal"/>
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:gravity="center_horizontal"
         android:text="Senha" />
 
     <TextView

@@ -19,6 +19,7 @@ import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.ui.newlist.Product
 import com.powellapps.compraparamim.fragment.ShareListFragment
+import com.powellapps.compraparamim.model.MostUsedProduct
 import com.powellapps.compraparamim.ui.newlist.ViewModelNewList
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
@@ -65,7 +66,7 @@ class NewListActivity : AppCompatActivity() {
         })
 
         viewModelNames.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
-           // setNames(it)
+            setNames(it)
         })
 
         val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
@@ -109,14 +110,14 @@ class NewListActivity : AppCompatActivity() {
         return intent.getSerializableExtra(ConstantsUtils.SHOPPING.name) == null
     }
 
-    fun setNames(it: List<String>) {
-        var names = ArrayList<String>()
+    fun setNames(it: List<MostUsedProduct>) {
+        var names = ArrayList<MostUsedProduct>()
         it.forEach {
             if(!names.contains(it)){
                 names.add(it)
             }
         }
-        val adapter = ArrayAdapter<String>(
+        val adapter = ArrayAdapter<MostUsedProduct>(
             this,
             android.R.layout.simple_dropdown_item_1line,
             names
@@ -137,6 +138,9 @@ class NewListActivity : AppCompatActivity() {
                     ShareListFragment.newInstance(
                         FirebaseRepository().getUserId(), shopping
                     ).show(supportFragmentManager, "share")
+                }
+                R.id.item_copy -> {
+
                 }
             }
         }

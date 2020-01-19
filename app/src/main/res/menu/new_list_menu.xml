@@ -7,4 +7,10 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_action_share"
         android:title="@string/compartilhar" />
+
+    <item
+        android:id="@+id/item_copy"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_action_copy"
+        android:title="@string/duplicar" />
 </menu>

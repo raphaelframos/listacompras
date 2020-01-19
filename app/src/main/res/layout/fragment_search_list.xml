@@ -38,7 +38,6 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:text="222"
             android:id="@+id/editText_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +61,6 @@
             android:id="@+id/editText_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3zcj"
             android:hint="@string/senha" />
     </com.google.android.material.textfield.TextInputLayout>
 

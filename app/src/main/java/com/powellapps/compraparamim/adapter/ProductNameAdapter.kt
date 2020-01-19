@@ -37,8 +37,10 @@ class ProductNameAdapter : RecyclerView.Adapter<ProductNameAdapter.ViewHolder>()
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         var textViewName = itemView.findViewById<TextView>(R.id.textView_name)
+        var textViewAmount = itemView.findViewById<TextView>(R.id.textView_size)
         fun bind(product: MostUsedProduct) {
             textViewName.text = product.name
+            textViewAmount.text = product.list.size.toString()
         }
 
 

@@ -91,15 +91,15 @@ class FirebaseRepository {
     }
 
     fun getUserId(): String {
-        return "1"
+        return "2"
     }
 
     fun updateShare(shopping: Shopping) {
         getLists().document(shopping.documentId).update(shopping.shareMap())
     }
 
-    fun removeProduct(shopping: Shopping) {
-        getLists().document(shopping.documentId).update("products", shopping.products)
+    fun removeProduct(product: Product) {
+        getProducts().document(product.documentId).delete()
     }
 
     fun follow(userId: String, shopping: Shopping) {
@@ -119,8 +119,10 @@ class FirebaseRepository {
 
     private fun getShare() = getDB().collection("shared")
 
+    private fun getProducts() = getDB().collection(PRODUCTS)
+
     fun getProductsBy(shoppingId: String): Query {
-        return getDB().collection(PRODUCTS).whereEqualTo("shoppingId", shoppingId)
+        return getProducts().whereEqualTo("shoppingId", shoppingId)
     }
 
 

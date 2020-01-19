@@ -24,4 +24,5 @@
     <string name="cancelar">Cancelar</string>
     <string name="campo_branco">Campo em branco!</string>
     <string name="senha">Senha</string>
+    <string name="duplicar">Duplicar</string>
 </resources>
