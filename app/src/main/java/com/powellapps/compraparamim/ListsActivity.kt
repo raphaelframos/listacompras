@@ -72,6 +72,7 @@ class ListsActivity : AppCompatActivity() {
         productViewModel.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
             adapterProducts.update(it)
         })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

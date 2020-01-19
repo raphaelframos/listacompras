@@ -1,6 +1,5 @@
 package com.powellapps.compraparamim.repository
 
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.powellapps.compraparamim.model.Share
@@ -27,13 +26,35 @@ class FirebaseRepository {
     fun saveShopping(shopping: Shopping): String? {
         val ref = getLists().document()
         ref.set(shopping)
+        Utils().show("Criando shopping")
         return ref.id
     }
 
     fun saveProduct(shopping: Shopping, product: Product) {
-        shopping.add(product)
-        getLists().document(shopping.documentId).update("products", shopping.products)
-        getDB().collection(USERS).document(shopping.userId).collection(PRODUCTS).add(product.nameMap())
+        product.shoppingId = shopping.documentId
+        product.userId = shopping.userId
+        getDB().collection(PRODUCTS).add(product)
+
+
+     //   shopping.add(product)
+     //   getLists().document(shopping.documentId).update("products", shopping.products)
+    //    getDB().collection(USERS).document(shopping.userId).collection(PRODUCTS).add(product)
+        /*
+        val writeBatch: WriteBatch = rootRef.batch()
+        batch.set(productsRef.document(), yourObject)
+        batch.set(newProductsRef.document(), yourObject)
+
+// This how you commit the batch
+        // This how you commit the batch
+        writeBatch.commit().addOnCompleteListener {
+            // ...
+        }
+
+         */
+    }
+
+    fun getProduct(userId : String, name : String): Query {
+        return getDB().collection(USERS).document(userId).collection(PRODUCTS).whereEqualTo("name", name)
     }
 
     fun updateProducts(shopping: Shopping) {
@@ -65,12 +86,12 @@ class FirebaseRepository {
     }
 
 
-    fun getMostProducts(adminId: String): CollectionReference {
-        return getDB().collection(USERS).document(adminId).collection(PRODUCTS)
+    fun getMostProducts(adminId: String): Query {
+        return getDB().collection(PRODUCTS).whereEqualTo("userId", adminId)
     }
 
     fun getUserId(): String {
-        return "3"
+        return "1"
     }
 
     fun updateShare(shopping: Shopping) {
@@ -97,6 +118,10 @@ class FirebaseRepository {
     }
 
     private fun getShare() = getDB().collection("shared")
+
+    fun getProductsBy(shoppingId: String): Query {
+        return getDB().collection(PRODUCTS).whereEqualTo("shoppingId", shoppingId)
+    }
 
 
 }

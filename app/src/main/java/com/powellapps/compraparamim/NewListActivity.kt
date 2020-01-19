@@ -27,7 +27,7 @@ import kotlin.collections.ArrayList
 
 class NewListActivity : AppCompatActivity() {
 
-    var adapter = ProductAdapter()
+    var adapter = ProductAdapter(this)
     lateinit var editTextName : AutoCompleteTextView
     var shopping : Shopping =
         Shopping()
@@ -56,9 +56,6 @@ class NewListActivity : AppCompatActivity() {
             }
         }else{
             getShoppingIfExists()
-            viewModel.getProducts(shoppingId = shopping.documentId).observe(this, Observer {
-                adapter.update(it, shopping)
-            })
         }
 
 
@@ -68,7 +65,7 @@ class NewListActivity : AppCompatActivity() {
         })
 
         viewModelNames.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
-            setNames(it)
+           // setNames(it)
         })
 
         val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
@@ -147,7 +144,7 @@ class NewListActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(shopping.products.size == 0) {
+        if(adapter.products.size == 0) {
             FirebaseRepository().removeShopping(
                 shopping.documentId
             )

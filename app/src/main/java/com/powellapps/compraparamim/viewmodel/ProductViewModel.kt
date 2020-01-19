@@ -3,25 +3,26 @@ package com.powellapps.compraparamim.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.powellapps.compraparamim.model.MostUsedProduct
 import com.powellapps.compraparamim.repository.FirebaseRepository
+import com.powellapps.compraparamim.ui.newlist.Product
 
 class ProductViewModel : ViewModel() {
 
-    private val products = MutableLiveData<List<String>>()
+    private val products = MutableLiveData<List<MostUsedProduct>>()
 
-    fun getProducts(id: String): LiveData<List<String>> {
-        var result = HashMap<String, Int>()
+    fun getProducts(id: String): LiveData<List<MostUsedProduct>> {
+
         FirebaseRepository().getMostProducts(id).addSnapshotListener{ value, e->
-            value!!.forEach {
-                val name : String = it.get("name") as String
-                if(result.contains(name)){
-                    result[name] = result.getValue(name) + 1
-                }else{
-                    result.put(name, 1)
-                }
+            val list = value!!.toObjects(Product::class.java)
+            var mostUsed = ArrayList<MostUsedProduct>()
+            val result = list.groupBy { it.name }.entries.map { (name, group) ->
+                var product = MostUsedProduct(name, group)
+                mostUsed.add(product)
             }
-            val names = result.toList().sortedBy { (_, value) -> value}.toMap()
-            products.value = names.keys.toList().reversed()
+
+            products.value = mostUsed.sortedByDescending { it.list.size }
+
         }
         return products
     }

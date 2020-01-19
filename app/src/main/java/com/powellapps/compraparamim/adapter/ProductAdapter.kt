@@ -1,10 +1,12 @@
 package com.powellapps.compraparamim.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FieldValue
 import com.powellapps.compraparamim.R
@@ -12,7 +14,7 @@ import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.ui.newlist.Product
 
-class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     var products = ArrayList<Product>()
     lateinit var shopping: Shopping
@@ -45,6 +47,16 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
             FirebaseRepository().updateProducts(shopping)
 
         }
+
+        /*
+        if(product.purchased){
+            holder.textViewName.setTextColor(ContextCompat.getColor(context, R.color.gray))
+        }else{
+            holder.textViewName.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+        }
+
+         */
+
     }
 
     fun update(it: List<Product>, shopping: Shopping) {

@@ -8,6 +8,8 @@ class Product : Serializable{
     var amount = 1
     var name = ""
     var purchased = false
+    var shoppingId = ""
+    var userId = ""
     @DocumentId
     var documentId = ""
 
@@ -42,9 +44,7 @@ class Product : Serializable{
 
         other as Product
 
-        if (amount != other.amount) return false
         if (name != other.name) return false
-        if (purchased != other.purchased) return false
 
         return true
     }
@@ -52,7 +52,6 @@ class Product : Serializable{
     override fun hashCode(): Int {
         var result = amount
         result = 31 * result + name.hashCode()
-        result = 31 * result + purchased.hashCode()
         return result
     }
 

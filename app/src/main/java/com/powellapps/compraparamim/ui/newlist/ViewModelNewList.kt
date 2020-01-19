@@ -12,9 +12,9 @@ class ViewModelNewList : ViewModel() {
 
     fun getProducts(shoppingId: String) : LiveData<List<Product>> {
 
-        FirebaseRepository().getShopping(shoppingId).addSnapshotListener{ snapshot, e ->
-            if(snapshot?.exists()!!) {
-                var sortedList = snapshot?.toObject(Shopping::class.java)!!.products.sortedWith(compareBy({ it.name }))
+        FirebaseRepository().getProductsBy(shoppingId).addSnapshotListener{ snapshot, e ->
+            if(!snapshot!!.isEmpty) {
+                var sortedList = snapshot.toObjects(Product::class.java).sortedWith(compareBy({ it.name }))
                 products.value = sortedList
             }
         }

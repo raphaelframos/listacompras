@@ -46,6 +46,7 @@ class MyListAdapter(val context: Context, val isShared : Boolean) : RecyclerView
         }else{
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green))
         }
+
         Glide.with(context)
             .load("https://s2.glbimg.com/hwnZJ0JIuEZUaS96o8We1f19C3o=/smart/e.glbimg.com/og/ed/f/original/2018/11/21/44622724_295246567994048_7341763530153746375_n.jpg")
             .apply(RequestOptions.circleCropTransform())

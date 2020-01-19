@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.powellapps.compraparamim.R
+import com.powellapps.compraparamim.model.MostUsedProduct
 
 class ProductNameAdapter : RecyclerView.Adapter<ProductNameAdapter.ViewHolder>() {
 
-    private var list = emptyList<String>()
+    private var list = emptyList<MostUsedProduct>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_product_name, parent, false)
@@ -26,7 +27,7 @@ class ProductNameAdapter : RecyclerView.Adapter<ProductNameAdapter.ViewHolder>()
         holder.bind(list[position])
     }
 
-    fun update(it: List<String>?) {
+    fun update(it: List<MostUsedProduct>) {
         if (it != null) {
             this.list = it
             notifyDataSetChanged()
@@ -36,8 +37,8 @@ class ProductNameAdapter : RecyclerView.Adapter<ProductNameAdapter.ViewHolder>()
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         var textViewName = itemView.findViewById<TextView>(R.id.textView_name)
-        fun bind(name: String) {
-            textViewName.text = name
+        fun bind(product: MostUsedProduct) {
+            textViewName.text = product.name
         }
 
 
