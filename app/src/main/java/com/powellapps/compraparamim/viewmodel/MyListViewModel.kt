@@ -1,13 +1,10 @@
-package com.powellapps.compraparamim.ui.mylist
+package com.powellapps.compraparamim.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.util.Util
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.utils.Utils
 
 class MyListViewModel : ViewModel() {
 

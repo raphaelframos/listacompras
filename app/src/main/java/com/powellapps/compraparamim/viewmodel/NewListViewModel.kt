@@ -1,12 +1,12 @@
-package com.powellapps.compraparamim.ui.newlist
+package com.powellapps.compraparamim.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.powellapps.compraparamim.model.Shopping
+import com.powellapps.compraparamim.model.Product
 import com.powellapps.compraparamim.repository.FirebaseRepository
 
-class ViewModelNewList : ViewModel() {
+class NewListViewModel : ViewModel() {
 
     private var products : MutableLiveData<List<Product>> = MutableLiveData()
 
@@ -15,7 +15,8 @@ class ViewModelNewList : ViewModel() {
         FirebaseRepository().getProductsBy(shoppingId).addSnapshotListener{ snapshot, e ->
             if(!snapshot!!.isEmpty) {
                 var sortedList = snapshot.toObjects(Product::class.java).sortedWith(compareBy({ it.name }))
-                products.value = sortedList
+                val list = sortedList.sortedWith(compareBy({it.purchased}))
+                products.value = list
             }
         }
 

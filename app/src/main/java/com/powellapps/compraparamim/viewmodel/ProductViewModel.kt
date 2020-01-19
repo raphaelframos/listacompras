@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.powellapps.compraparamim.model.MostUsedProduct
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.ui.newlist.Product
+import com.powellapps.compraparamim.model.Product
 
 class ProductViewModel : ViewModel() {
 

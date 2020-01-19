@@ -14,8 +14,8 @@ import com.powellapps.compraparamim.adapter.ProductNameAdapter
 import com.powellapps.compraparamim.adapter.MyListAdapter
 import com.powellapps.compraparamim.fragment.SearchListFragment
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.ui.mylist.MyListViewModel
-import com.powellapps.compraparamim.ui.mylist.ShareViewModel
+import com.powellapps.compraparamim.viewmodel.MyListViewModel
+import com.powellapps.compraparamim.viewmodel.ShareViewModel
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 

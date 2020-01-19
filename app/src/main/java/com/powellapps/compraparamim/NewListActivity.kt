@@ -17,10 +17,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.powellapps.compraparamim.adapter.ProductAdapter
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Shopping
-import com.powellapps.compraparamim.ui.newlist.Product
+import com.powellapps.compraparamim.model.Product
 import com.powellapps.compraparamim.fragment.ShareListFragment
 import com.powellapps.compraparamim.model.MostUsedProduct
-import com.powellapps.compraparamim.ui.newlist.ViewModelNewList
+import com.powellapps.compraparamim.viewmodel.NewListViewModel
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.activity_new_list.*
@@ -30,23 +30,78 @@ class NewListActivity : AppCompatActivity() {
 
     var adapter = ProductAdapter(this)
     lateinit var editTextName : AutoCompleteTextView
-    var shopping : Shopping =
-        Shopping()
+    var shopping : Shopping = Shopping()
+    var referenceId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_list)
 
         editTextName = findViewById(R.id.textInputEditText_name)
+        initRecyclerView()
+
+        val (viewModel, viewModelNames) = initViewModels()
+        setShopping()
+        supportActionBar?.title = shopping.nameFormat()
+        getProducts(viewModel, viewModelNames)
+
+        val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
+        imageButtonSend.setOnClickListener({
+            createProduct()
+        })
+
+    }
+
+    private fun createProduct() {
+        val name = editTextName.text.toString()
+        if (name.isNotEmpty()) {
+            val amount = spinner_amount.selectedItem as String
+            val product = Product(name)
+            product.amount = amount.toInt()
+            product.referenceId = referenceId
+            FirebaseRepository().saveProduct(
+                shopping,
+                product
+            )
+            editTextName.setText("")
+        } else {
+            editTextName.setError(getString(R.string.campo_branco))
+        }
+    }
+
+    private fun getProducts(
+        viewModel: NewListViewModel,
+        viewModelNames: ProductViewModel
+    ) {
+        viewModel.getProducts(shopping.documentId).observe(this, Observer {
+            adapter.update(it, shopping)
+        })
+
+        viewModelNames.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
+            setNames(it)
+        })
+    }
+
+    private fun initRecyclerView() {
         val recyclerViewProducts = findViewById<RecyclerView>(R.id.recyclerView_products)
         recyclerViewProducts.layoutManager = LinearLayoutManager(this)
         recyclerViewProducts.adapter = adapter
-        recyclerViewProducts.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        recyclerViewProducts.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+    }
 
-        val viewModel = ViewModelProviders.of(this).get(ViewModelNewList::class.java)
+    private fun initViewModels(): Pair<NewListViewModel, ProductViewModel> {
+        val viewModel = ViewModelProviders.of(this).get(NewListViewModel::class.java)
         val viewModelNames = ViewModelProviders.of(this).get(ProductViewModel::class.java)
+        return Pair(viewModel, viewModelNames)
+    }
 
-        if(isNew()){
+    private fun setShopping() {
+        if (isNew()) {
             val newPosition = intent.getIntExtra(ConstantsUtils.POSITION.name, 1) + 1
             shopping = Shopping()
             shopping.name = newPosition
@@ -55,39 +110,9 @@ class NewListActivity : AppCompatActivity() {
             if (id != null) {
                 shopping.documentId = id
             }
-        }else{
+        } else {
             getShoppingIfExists()
         }
-
-
-        supportActionBar?.title = shopping.nameFormat()
-        viewModel.getProducts(shopping.documentId).observe(this, Observer {
-            adapter.update(it, shopping)
-        })
-
-        viewModelNames.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
-            setNames(it)
-        })
-
-        val imageButtonSend = findViewById<ImageButton>(R.id.imageButton_send)
-        imageButtonSend.setOnClickListener({
-
-            val name = editTextName.text.toString()
-            if(name.isNotEmpty()) {
-                val amount = spinner_amount.selectedItem as String
-                val product = Product(name)
-                product.amount = amount.toInt()
-                FirebaseRepository().saveProduct(
-                    shopping,
-                    product
-                )
-                editTextName.setText("")
-            }else{
-                editTextName.setError(getString(R.string.campo_branco))
-            }
-
-        })
-
     }
 
     fun showSnackbar(){
@@ -123,6 +148,12 @@ class NewListActivity : AppCompatActivity() {
             names
         )
         editTextName.setAdapter(adapter)
+        editTextName.setOnItemClickListener{ adapter, view, position, l ->
+            val product : MostUsedProduct = (editTextName.adapter.getItem(position) as MostUsedProduct)
+            referenceId = product.referenceId
+            createProduct()
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

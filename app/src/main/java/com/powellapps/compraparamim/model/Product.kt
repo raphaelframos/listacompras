@@ -1,4 +1,4 @@
-package com.powellapps.compraparamim.ui.newlist
+package com.powellapps.compraparamim.model
 
 import com.google.firebase.firestore.DocumentId
 import java.io.Serializable
@@ -12,6 +12,9 @@ class Product : Serializable{
     var userId = ""
     @DocumentId
     var documentId = ""
+    var prices = ArrayList<Double>()
+    var referenceId = ""
+    var currentPrice : Double = 0.0
 
     constructor(){}
 
@@ -38,6 +41,19 @@ class Product : Serializable{
         return map
     }
 
+    fun pricesMap(): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
+        map.put("currentPrice", currentPrice)
+        map.put("prices", prices)
+        return map
+    }
+
+    fun purchasedMap() : HashMap<String, Any> {
+        var map = HashMap<String, Any>()
+        map.put("purchased", purchased)
+        return map
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -55,5 +71,12 @@ class Product : Serializable{
         return result
     }
 
+    fun add(currentPrice: Double) {
+        prices.add(currentPrice)
+        bestPrice()
+    }
 
+    fun bestPrice(): Double? {
+        return prices.min()
+    }
 }

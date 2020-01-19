@@ -5,8 +5,7 @@ import com.google.firebase.firestore.*
 import com.powellapps.compraparamim.model.Share
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.model.User
-import com.powellapps.compraparamim.ui.newlist.Product
-import com.powellapps.compraparamim.utils.Utils
+import com.powellapps.compraparamim.model.Product
 
 
 class FirebaseRepository {
@@ -26,7 +25,6 @@ class FirebaseRepository {
     fun saveShopping(shopping: Shopping): String? {
         val ref = getLists().document()
         ref.set(shopping)
-        Utils().show("Criando shopping")
         return ref.id
     }
 
@@ -51,14 +49,6 @@ class FirebaseRepository {
         }
 
          */
-    }
-
-    fun getProduct(userId : String, name : String): Query {
-        return getDB().collection(USERS).document(userId).collection(PRODUCTS).whereEqualTo("name", name)
-    }
-
-    fun updateProducts(shopping: Shopping) {
-        getLists().document(shopping.documentId).update(PRODUCTS, shopping.products)
     }
 
     fun getListsById(adminId: String): Query {
@@ -123,6 +113,24 @@ class FirebaseRepository {
 
     fun getProductsBy(shoppingId: String): Query {
         return getProducts().whereEqualTo("shoppingId", shoppingId)
+    }
+
+    fun updatePurchase(product: Product) {
+        getProducts().document(product.documentId).update(product.purchasedMap())
+    }
+
+    fun updatePrice(product: Product) {
+        var referenceProduct = product
+        if(product.referenceId.isEmpty()){
+            getProducts().document(product.documentId).update(product.pricesMap())
+        }else{
+            getProducts().document(referenceProduct.referenceId).addSnapshotListener{ snap, e ->
+                if (snap != null) {
+                    referenceProduct = snap.toObject(Product::class.java)!!
+                    referenceProduct.add(product.currentPrice)
+                }
+            }
+        }
     }
 
 

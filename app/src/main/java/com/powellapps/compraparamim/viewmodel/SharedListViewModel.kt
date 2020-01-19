@@ -1,4 +1,4 @@
-package com.powellapps.compraparamim.ui.shared
+package com.powellapps.compraparamim.viewmodel
 
 import androidx.lifecycle.ViewModel
 

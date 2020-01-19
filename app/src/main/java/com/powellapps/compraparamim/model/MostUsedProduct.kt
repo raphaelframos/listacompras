@@ -1,7 +1,5 @@
 package com.powellapps.compraparamim.model
 
-import com.powellapps.compraparamim.ui.newlist.Product
-
 class MostUsedProduct(
     name: String,
     group: List<Product>
@@ -9,6 +7,7 @@ class MostUsedProduct(
 
     var name = name
     var list = group
+    var referenceId = group.get(0).documentId
 
     override fun toString(): String {
         return name

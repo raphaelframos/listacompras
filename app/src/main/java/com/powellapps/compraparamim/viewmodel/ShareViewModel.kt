@@ -1,4 +1,4 @@
-package com.powellapps.compraparamim.ui.mylist
+package com.powellapps.compraparamim.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.powellapps.compraparamim.model.Share
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.utils.Utils
 
 class ShareViewModel : ViewModel() {
 

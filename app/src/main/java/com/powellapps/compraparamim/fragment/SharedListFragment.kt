@@ -1,4 +1,4 @@
-package com.powellapps.compraparamim.ui.shared
+package com.powellapps.compraparamim.fragment
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.powellapps.compraparamim.R
+import com.powellapps.compraparamim.viewmodel.SharedListViewModel
 
 class SharedListFragment : Fragment() {
 
     companion object {
-        fun newInstance() = SharedListFragment()
+        fun newInstance() =
+            SharedListFragment()
     }
 
     private lateinit var viewModel: SharedListViewModel
