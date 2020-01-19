@@ -76,7 +76,10 @@ class Product : Serializable{
         bestPrice()
     }
 
-    fun bestPrice(): Double? {
-        return prices.min()
+    fun bestPrice(): Double {
+        if(prices.size > 0 ) {
+            return prices.min()!!
+        }
+        return 0.0
     }
 }

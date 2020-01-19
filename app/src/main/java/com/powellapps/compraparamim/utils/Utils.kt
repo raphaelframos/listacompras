@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.Log
 import androidx.core.content.ContextCompat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Utils {
@@ -34,6 +34,11 @@ class Utils {
 
     fun Context.colorList(id: Int): ColorStateList {
         return ColorStateList.valueOf(ContextCompat.getColor(this, id))
+    }
+
+    fun getMoney(d: Double) : String {
+        val format: NumberFormat = NumberFormat.getCurrencyInstance()
+        return format.format(d)
     }
 
 

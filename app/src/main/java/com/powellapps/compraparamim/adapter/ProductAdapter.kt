@@ -2,6 +2,7 @@ package com.powellapps.compraparamim.adapter
 
 import android.app.AlertDialog
 import android.content.Context
+import android.opengl.Visibility
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,8 @@ import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.model.Product
+import com.powellapps.compraparamim.utils.Utils
+import org.w3c.dom.Text
 
 class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
@@ -38,20 +41,22 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
             true
         }
 
-        holder.checkBoxBought.setOnCheckedChangeListener{ button, isChecked ->
-            product.purchased = isChecked
-            updatePurchased(product)
-            if(isChecked){
-                showAlert(product)
-            }
-
-        }
-
-
         if(product.purchased){
             holder.textViewName.setTextColor(ContextCompat.getColor(context, R.color.gray))
+            holder.checkBoxBought.isChecked = true
         }else{
             holder.textViewName.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+            holder.checkBoxBought.isChecked = false
+        }
+
+        holder.itemView.setOnClickListener {
+            product.purchased = !product.purchased
+
+            if(product.purchased){
+                showAlert(product)
+            }
+            updatePurchased(product)
+            Utils().show("Agora sim");
         }
 
     }
@@ -70,6 +75,7 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
                 val price = value.toDouble()
                 product.currentPrice = price
                 product.add(price)
+                updatePurchased(product)
                 FirebaseRepository().updatePrice(product)
             }
             dialog.cancel()
@@ -97,11 +103,27 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
         val textViewName : TextView = itemView.findViewById(R.id.textView_name)
         val textViewAmount : TextView = itemView.findViewById(R.id.textView_amount)
         val checkBoxBought : CheckBox = itemView.findViewById(R.id.checkBox_bought)
+        val textViewCurrent : TextView = itemView.findViewById(R.id.textView_current_price)
+        val textViewBestPrice : TextView = itemView.findViewById(R.id.textView_best_price)
 
         fun bind(product: Product) {
             textViewAmount.text = ""+product.amount
             textViewName.text = product.name
             checkBoxBought.isChecked = product.purchased
+            if(product.currentPrice > 0){
+                textViewCurrent.text = Utils().getMoney(product.currentPrice)
+                textViewCurrent.visibility = View.VISIBLE
+            }else{
+                textViewCurrent.visibility = View.GONE
+            }
+            if(product.bestPrice() > 0){
+                textViewBestPrice.text = Utils().getMoney(product.bestPrice())
+                textViewBestPrice.visibility = View.VISIBLE
+            }else{
+                textViewBestPrice.visibility = View.GONE
+            }
+
+
         }
 
     }
