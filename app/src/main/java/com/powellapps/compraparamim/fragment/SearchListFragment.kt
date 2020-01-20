@@ -25,14 +25,12 @@ class SearchListFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         val editTextId = view?.findViewById<TextInputEditText>(R.id.editText_id)
-        val editTextPassword = view?.findViewById<TextInputEditText>(R.id.editText_password)
         val buttonFollow = view?.findViewById<Button>(R.id.button_follow)
         buttonFollow!!.setOnClickListener({
 
             val id = editTextId!!.text.toString()
-            val password = editTextPassword!!.text.toString()
 
-            FirebaseRepository().getSharedShopping(id, password).addSnapshotListener{ snap, e ->
+            FirebaseRepository().getSharedShopping(id).addSnapshotListener{ snap, e ->
                 if(!snap?.isEmpty!!){
                     val shopping = snap.toObjects(Shopping::class.java).get(0)
                     FirebaseRepository().follow(FirebaseRepository().getUserId(), shopping)

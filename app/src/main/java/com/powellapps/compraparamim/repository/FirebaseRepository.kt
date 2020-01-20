@@ -61,8 +61,8 @@ class FirebaseRepository {
         return query
     }
 
-    fun getSharedShopping(sharedId: String, sharedPassword: String): Query {
-        val query = getLists().whereEqualTo("shareId", sharedId).whereEqualTo("sharePassword", sharedPassword)
+    fun getSharedShopping(sharedId: String): Query {
+        val query = getLists().whereEqualTo("shareId", sharedId)
         return query
     }
 
