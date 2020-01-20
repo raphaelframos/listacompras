@@ -61,17 +61,23 @@ class ListsActivity : AppCompatActivity() {
             startActivity(it)
         })
 
-        myListViewModel.getList(FirebaseRepository().getUserId()).observe(this, Observer {
-            adapter.update(it)
-        })
+        if(FirebaseRepository().existUser()){
+            myListViewModel.getList(FirebaseRepository().getUserId()).observe(this, Observer {
+                adapter.update(it)
+            })
 
-        shareViewModel.getShareShoppings(FirebaseRepository().getUserId()).observe(this, Observer {
-            adapterShared.update(it)
-        })
+            shareViewModel.getShareShoppings(FirebaseRepository().getUserId()).observe(this, Observer {
+                adapterShared.update(it)
+            })
 
-        productViewModel.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
-            adapterProducts.update(it)
-        })
+            productViewModel.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
+                adapterProducts.update(it)
+            })
+        }else{
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
+
 
     }
 

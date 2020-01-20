@@ -2,7 +2,6 @@ package com.powellapps.compraparamim.adapter
 
 import android.app.AlertDialog
 import android.content.Context
-import android.opengl.Visibility
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.model.Product
 import com.powellapps.compraparamim.utils.Utils
-import org.w3c.dom.Text
 
 class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
@@ -54,9 +52,10 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
 
             if(product.purchased){
                 showAlert(product)
+            }else{
+                updatePurchased(product)
             }
-            updatePurchased(product)
-            Utils().show("Agora sim");
+
         }
 
     }
@@ -75,13 +74,13 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
                 val price = value.toDouble()
                 product.currentPrice = price
                 product.add(price)
-                updatePurchased(product)
-                FirebaseRepository().updatePrice(product)
+                FirebaseRepository().updateNewPrice(product)
             }
             dialog.cancel()
         }
 
         builder.setNegativeButton("Cancelar"){dialog,which ->
+            updatePurchased(product)
             dialog.cancel()
         }
         builder.create().show()
@@ -89,7 +88,7 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
     }
 
     private fun updatePurchased(product: Product) {
-        FirebaseRepository().updatePurchase(product)
+        FirebaseRepository().updatePurchased(product)
     }
 
     fun update(it: List<Product>, shopping: Shopping) {

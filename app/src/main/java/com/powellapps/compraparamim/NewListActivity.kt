@@ -59,10 +59,21 @@ class NewListActivity : AppCompatActivity() {
             val product = Product(name)
             product.amount = amount.toInt()
             product.referenceId = referenceId
-            FirebaseRepository().saveProduct(
-                shopping,
-                product
-            )
+            if(referenceId.isNotEmpty()){
+                FirebaseRepository().getProduct(referenceId).addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                    val reference = documentSnapshot?.toObject(Product::class.java)
+                    if (reference != null) {
+                        product.prices = reference.prices
+                        FirebaseRepository().saveProduct(shopping, product)
+                    }else{
+                        product.referenceId = ""
+                        FirebaseRepository().saveProduct(shopping, product)
+                    }
+                }
+            }else {
+                FirebaseRepository().saveProduct(shopping, product)
+            }
+            referenceId = ""
             editTextName.setText("")
         } else {
             editTextName.setError(getString(R.string.campo_branco))

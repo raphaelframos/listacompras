@@ -17,6 +17,8 @@ class MyListViewModel : ViewModel() {
                 val shoppings = snapshot.toObjects(Shopping::class.java)
                 var sortedList = shoppings.sortedWith(compareBy({ it.date }))
                 list.value = sortedList.reversed()
+            }else{
+                list.value = emptyList()
             }
         }
 

@@ -1,11 +1,15 @@
 package com.powellapps.compraparamim.repository
 
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import com.powellapps.compraparamim.model.Share
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.model.User
 import com.powellapps.compraparamim.model.Product
+import com.powellapps.compraparamim.utils.Utils
 
 
 class FirebaseRepository {
@@ -32,6 +36,7 @@ class FirebaseRepository {
         product.shoppingId = shopping.documentId
         product.userId = shopping.userId
         getDB().collection(PRODUCTS).add(product)
+
 
 
      //   shopping.add(product)
@@ -81,7 +86,7 @@ class FirebaseRepository {
     }
 
     fun getUserId(): String {
-        return "2"
+        return getUser().uid
     }
 
     fun updateShare(shopping: Shopping) {
@@ -107,6 +112,17 @@ class FirebaseRepository {
         FirebaseRepository().getDB().collection("users").document(id).set(user)
     }
 
+    fun existUser() : Boolean {
+        return FirebaseAuth.getInstance().currentUser != null
+    }
+
+    fun getUser(): FirebaseUser {
+        if(existUser()) {
+            return FirebaseAuth.getInstance().currentUser!!
+        }
+        throw NoClassDefFoundError()
+    }
+
     private fun getShare() = getDB().collection("shared")
 
     private fun getProducts() = getDB().collection(PRODUCTS)
@@ -115,23 +131,31 @@ class FirebaseRepository {
         return getProducts().whereEqualTo("shoppingId", shoppingId)
     }
 
-    fun updatePurchase(product: Product) {
-        getProducts().document(product.documentId).update(product.purchasedMap())
+    fun updatePurchased(product: Product): Task<Void> {
+        return getProducts().document(product.documentId).update(product.purchasedMap())
     }
 
-    fun updatePrice(product: Product) {
-        var referenceProduct = product
-        if(product.referenceId.isEmpty()){
-            getProducts().document(product.documentId).update(product.pricesMap())
-        }else{
-            getProducts().document(referenceProduct.referenceId).addSnapshotListener{ snap, e ->
-                if (snap != null) {
-                    referenceProduct = snap.toObject(Product::class.java)!!
-                    referenceProduct.add(product.currentPrice)
-                }
+    fun getProduct(id: String): DocumentReference {
+        return getProducts().document(id)
+    }
+
+    fun updateNewPrice(product: Product) {
+        var task: Task<Void>? = null
+        if(!product.referenceId.isEmpty()){
+            getProduct(product.referenceId).get().addOnSuccessListener {
+                val reference = it!!.toObject(Product::class.java)!!
+                reference.add(product.currentPrice)
+                product.prices = reference.prices
+                task = getProducts().document(reference.documentId).update(product.pricesMap())
             }
         }
-    }
 
+        if(task == null || task!!.isSuccessful){
+            getProducts().document(product.documentId).update(product.newPriceMap())
+        }
+
+
+
+    }
 
 }

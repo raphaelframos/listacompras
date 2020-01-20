@@ -1,12 +1,14 @@
 package com.powellapps.compraparamim.model
 
+import com.powellapps.compraparamim.utils.Utils
+
 class MostUsedProduct(
     name: String,
     group: List<Product>
 ) {
 
     var name = name
-    var list = group
+    var list = group.sortedWith(compareBy({it.date}))
     var referenceId = group.get(0).documentId
 
     override fun toString(): String {

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.powellapps.compraparamim.model.MostUsedProduct
 import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.model.Product
+import java.lang.Exception
 
 class ProductViewModel : ViewModel() {
 
@@ -14,15 +15,17 @@ class ProductViewModel : ViewModel() {
     fun getProducts(id: String): LiveData<List<MostUsedProduct>> {
 
         FirebaseRepository().getMostProducts(id).addSnapshotListener{ value, e->
-            val list = value!!.toObjects(Product::class.java)
-            var mostUsed = ArrayList<MostUsedProduct>()
-            val result = list.groupBy { it.name }.entries.map { (name, group) ->
-                var product = MostUsedProduct(name, group)
-                mostUsed.add(product)
+            try {
+                val list = value!!.toObjects(Product::class.java)
+                var mostUsed = ArrayList<MostUsedProduct>()
+                list.groupBy { it.name }.entries.map { (name, group) ->
+                    var product = MostUsedProduct(name, group)
+                    mostUsed.add(product)
+                }
+                products.value = mostUsed.sortedByDescending { it.list.size }
+            }catch (e : Exception){
+                e.printStackTrace()
             }
-
-            products.value = mostUsed.sortedByDescending { it.list.size }
-
         }
         return products
     }

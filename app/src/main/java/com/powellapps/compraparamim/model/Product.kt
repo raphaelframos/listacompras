@@ -2,6 +2,9 @@ package com.powellapps.compraparamim.model
 
 import com.google.firebase.firestore.DocumentId
 import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class Product : Serializable{
 
@@ -15,16 +18,21 @@ class Product : Serializable{
     var prices = ArrayList<Double>()
     var referenceId = ""
     var currentPrice : Double = 0.0
+    var date : Long = 0
 
-    constructor(){}
+    constructor(){
+        date = Date().time
+    }
 
     constructor(name: String){
         this.name = name
+        date = Date().time
     }
 
     constructor(name: String, amount: Int){
         this.name = name
         this.amount = amount
+        date = Date().time
     }
 
     fun map() : HashMap<String, Any> {
@@ -43,7 +51,6 @@ class Product : Serializable{
 
     fun pricesMap(): HashMap<String, Any> {
         var map = HashMap<String, Any>()
-        map.put("currentPrice", currentPrice)
         map.put("prices", prices)
         return map
     }
@@ -73,7 +80,6 @@ class Product : Serializable{
 
     fun add(currentPrice: Double) {
         prices.add(currentPrice)
-        bestPrice()
     }
 
     fun bestPrice(): Double {
@@ -81,5 +87,13 @@ class Product : Serializable{
             return prices.min()!!
         }
         return 0.0
+    }
+
+    fun newPriceMap(): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
+        map.put("purchased", purchased)
+        map.put("currentPrice", currentPrice)
+        map.put("prices", prices)
+        return map
     }
 }
