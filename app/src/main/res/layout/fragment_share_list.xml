@@ -22,40 +22,26 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_condensed_bold"
         android:gravity="center_horizontal"
-        android:text="Para compartilhar esta lista de compras mostre sua palavra chave e a senha."
+        android:text="Para compartilhar esta lista de compras mostre sua palavra chave."
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto_condensed_bold"
+        android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
-        android:text="Palavra Chave" />
+        android:text="Palavra Chave"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView_user_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto_condensed_bold"
         android:gravity="center_horizontal"
-        android:text="Senha" />
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
 
 
 </LinearLayout>

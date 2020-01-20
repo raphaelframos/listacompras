@@ -18,8 +18,6 @@ import com.powellapps.compraparamim.utils.Utils
  */
 class ShareListFragment : DialogFragment() {
 
-    lateinit var textViewPassword : TextView
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +27,6 @@ class ShareListFragment : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        textViewPassword = view?.findViewById(R.id.textView_password)!!
         val textViewUserId = view?.findViewById<TextView>(R.id.textView_user_id)
         val shopping : Shopping = arguments!!.getSerializable(ConstantsUtils.SHOPPING.name) as Shopping
         val userId = arguments?.getString(ConstantsUtils.ID.name)
@@ -55,7 +52,6 @@ class ShareListFragment : DialogFragment() {
     ) {
         val result = generateShare()
         shopping.shareId = result.first
-        shopping.sharePassword = result.second
         showShare(textViewUserId, shopping, userId)
         if (userId != null) {
             FirebaseRepository().updateShare(shopping)
@@ -64,7 +60,7 @@ class ShareListFragment : DialogFragment() {
 
     private fun generateShare(): Pair<String, String> {
         val sharePassword = Utils().generateRandomPassword()
-        val shareId = Utils().generateId(FirebaseRepository().getUserId())
+        val shareId = (Utils().generateRandomPassword() + Utils().generateId(FirebaseRepository().getUserId()))
         return Pair(shareId, sharePassword)
     }
 
@@ -73,11 +69,10 @@ class ShareListFragment : DialogFragment() {
         shopping: Shopping,
         userId: String?
     ) {
-        if(shopping.shareId.isEmpty() || shopping.sharePassword.isEmpty()){
+        if(shopping.shareId.isEmpty()){
             initShare(shopping, textViewUserId, userId)
         }else{
             textViewUserId?.text = shopping.shareId
-            textViewPassword.text = shopping.sharePassword
         }
 
     }

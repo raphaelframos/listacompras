@@ -18,7 +18,7 @@ class Utils {
 
     fun generateRandomPassword(): String {
         val STRING_CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzZ"
-        val password = (1..4).map { STRING_CHARACTERS.random() }.joinToString("")
+        val password = (1..3).map { STRING_CHARACTERS.random() }.joinToString("")
         return password.toLowerCase(Locale.getDefault())
     }
 

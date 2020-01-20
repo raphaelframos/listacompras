@@ -14,7 +14,6 @@ class Shopping : Serializable {
     @DocumentId
     var documentId = ""
     var shareId = ""
-    var sharePassword = ""
     var shared = ArrayList<String>()
 
     constructor(){
@@ -24,7 +23,6 @@ class Shopping : Serializable {
     fun shareMap(): MutableMap<String, Any> {
         var map = HashMap<String, Any>()
         map.put("shareId", shareId)
-        map.put("sharePassword", sharePassword)
         return map
     }
 
