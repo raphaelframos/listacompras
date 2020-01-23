@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.powellapps.compraparamim.R
 import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.NewListActivity
+import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
 import java.util.*
@@ -48,7 +49,7 @@ class MyListAdapter(val context: Context, val isShared : Boolean) : RecyclerView
         }
 
         Glide.with(context)
-            .load("https://s2.glbimg.com/hwnZJ0JIuEZUaS96o8We1f19C3o=/smart/e.glbimg.com/og/ed/f/original/2018/11/21/44622724_295246567994048_7341763530153746375_n.jpg")
+            .load(FirebaseRepository().getUser().photoUrl)
             .apply(RequestOptions.circleCropTransform())
             .into(holder.imageView);
     }

@@ -39,10 +39,7 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        signIn.setOnClickListener{
-            view: View? -> signInGoogle()
-        }
-
+        signInGoogle()
 
 
 
@@ -97,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
                     val user = User(id,name, picture.toString());
 
                     FirebaseRepository().saveUser(user)
+                    finish()
 
                 }
 
