@@ -15,9 +15,9 @@ class Product : Serializable{
     var userId = ""
     @DocumentId
     var documentId = ""
-    var prices = ArrayList<Double>()
     var referenceId = ""
     var currentPrice : Double = 0.0
+    var bestPrice : Double = 0.0
     var date : Long = 0
 
     constructor(){
@@ -49,12 +49,6 @@ class Product : Serializable{
         return map
     }
 
-    fun pricesMap(): HashMap<String, Any> {
-        var map = HashMap<String, Any>()
-        map.put("prices", prices)
-        return map
-    }
-
     fun purchasedMap() : HashMap<String, Any> {
         var map = HashMap<String, Any>()
         map.put("purchased", purchased)
@@ -78,22 +72,11 @@ class Product : Serializable{
         return result
     }
 
-    fun add(currentPrice: Double) {
-        prices.add(currentPrice)
-    }
-
-    fun bestPrice(): Double {
-        if(prices.size > 0 ) {
-            return prices.min()!!
-        }
-        return 0.0
-    }
-
     fun newPriceMap(): HashMap<String, Any> {
         var map = HashMap<String, Any>()
         map.put("purchased", purchased)
         map.put("currentPrice", currentPrice)
-        map.put("prices", prices)
+        map.put("bestPrice", bestPrice)
         return map
     }
 }

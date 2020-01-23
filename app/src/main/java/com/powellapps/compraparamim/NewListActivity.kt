@@ -20,8 +20,10 @@ import com.powellapps.compraparamim.model.Shopping
 import com.powellapps.compraparamim.model.Product
 import com.powellapps.compraparamim.fragment.ShareListFragment
 import com.powellapps.compraparamim.model.MostUsedProduct
+import com.powellapps.compraparamim.model.ReferenceProduct
 import com.powellapps.compraparamim.viewmodel.NewListViewModel
 import com.powellapps.compraparamim.utils.ConstantsUtils
+import com.powellapps.compraparamim.utils.Utils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.activity_new_list.*
 import kotlin.collections.ArrayList
@@ -31,7 +33,7 @@ class NewListActivity : AppCompatActivity() {
     var adapter = ProductAdapter(this)
     lateinit var editTextName : AutoCompleteTextView
     var shopping : Shopping = Shopping()
-    var referenceId = ""
+    var product : Product = Product()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,24 +58,10 @@ class NewListActivity : AppCompatActivity() {
         val name = editTextName.text.toString()
         if (name.isNotEmpty()) {
             val amount = spinner_amount.selectedItem as String
-            val product = Product(name)
+            product.name = name
             product.amount = amount.toInt()
-            product.referenceId = referenceId
-            if(referenceId.isNotEmpty()){
-                FirebaseRepository().getProduct(referenceId).addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                    val reference = documentSnapshot?.toObject(Product::class.java)
-                    if (reference != null) {
-                        product.prices = reference.prices
-                        FirebaseRepository().saveProduct(shopping, product)
-                    }else{
-                        product.referenceId = ""
-                        FirebaseRepository().saveProduct(shopping, product)
-                    }
-                }
-            }else {
-                FirebaseRepository().saveProduct(shopping, product)
-            }
-            referenceId = ""
+            FirebaseRepository().saveProduct(shopping, product)
+            product = Product()
             editTextName.setText("")
         } else {
             editTextName.setError(getString(R.string.campo_branco))
@@ -88,7 +76,7 @@ class NewListActivity : AppCompatActivity() {
             adapter.update(it, shopping)
         })
 
-        viewModelNames.getProducts(FirebaseRepository().getUserId()).observe(this, Observer {
+        viewModelNames.getReferenceProducts(FirebaseRepository().getUserId()).observe(this, Observer {
             setNames(it)
         })
     }
@@ -146,22 +134,24 @@ class NewListActivity : AppCompatActivity() {
         return intent.getSerializableExtra(ConstantsUtils.SHOPPING.name) == null
     }
 
-    fun setNames(it: List<MostUsedProduct>) {
-        var names = ArrayList<MostUsedProduct>()
+    fun setNames(it: List<ReferenceProduct>) {
+        var names = ArrayList<ReferenceProduct>()
         it.forEach {
             if(!names.contains(it)){
                 names.add(it)
             }
         }
-        val adapter = ArrayAdapter<MostUsedProduct>(
+        val adapter = ArrayAdapter<ReferenceProduct>(
             this,
             android.R.layout.simple_dropdown_item_1line,
             names
         )
         editTextName.setAdapter(adapter)
         editTextName.setOnItemClickListener{ adapter, view, position, l ->
-            val product : MostUsedProduct = (editTextName.adapter.getItem(position) as MostUsedProduct)
-            referenceId = product.referenceId
+            val referenceProduct : ReferenceProduct = (editTextName.adapter.getItem(position) as ReferenceProduct)
+            product.referenceId = referenceProduct.documentId
+            product.bestPrice = referenceProduct.bestPrice()
+            Utils().show("OnItemClick")
             createProduct()
         }
 
@@ -191,9 +181,7 @@ class NewListActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if(adapter.products.size == 0) {
-            FirebaseRepository().removeShopping(
-                shopping.documentId
-            )
+            FirebaseRepository().removeShopping(shopping.documentId)
         }
         super.onBackPressed()
     }

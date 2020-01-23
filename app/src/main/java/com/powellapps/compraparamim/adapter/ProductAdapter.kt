@@ -68,18 +68,18 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
         val editText  = dialogLayout.findViewById<EditText>(R.id.editText_price)
         editText.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
         builder.setView(dialogLayout)
-        builder.setPositiveButton("Salvar"){dialog, which ->
+        builder.setPositiveButton("Salvar"){ dialog, _ ->
             val value = editText.text.toString()
             if(value.isNotEmpty()){
                 val price = value.toDouble()
                 product.currentPrice = price
-                product.add(price)
+                Utils().show("Update new price")
                 FirebaseRepository().updateNewPrice(product)
             }
             dialog.cancel()
         }
 
-        builder.setNegativeButton("Cancelar"){dialog,which ->
+        builder.setNegativeButton("Cancelar"){ dialog, _ ->
             updatePurchased(product)
             dialog.cancel()
         }
@@ -115,8 +115,8 @@ class ProductAdapter(val context: Context) : RecyclerView.Adapter<ProductAdapter
             }else{
                 textViewCurrent.visibility = View.GONE
             }
-            if(product.bestPrice() > 0){
-                textViewBestPrice.text = Utils().getMoney(product.bestPrice())
+            if(product.bestPrice > 0){
+                textViewBestPrice.text = Utils().getMoney(product.bestPrice)
                 textViewBestPrice.visibility = View.VISIBLE
             }else{
                 textViewBestPrice.visibility = View.GONE

@@ -5,15 +5,13 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.powellapps.compraparamim.model.Share
-import com.powellapps.compraparamim.model.Shopping
-import com.powellapps.compraparamim.model.User
-import com.powellapps.compraparamim.model.Product
+import com.powellapps.compraparamim.model.*
 import com.powellapps.compraparamim.utils.Utils
 
 
 class FirebaseRepository {
 
+    private val REFERENCES: String = "references"
     private val LISTS = "lists"
     private val PRODUCTS = "products"
     private val USERS = "users"
@@ -35,7 +33,8 @@ class FirebaseRepository {
     fun saveProduct(shopping: Shopping, product: Product) {
         product.shoppingId = shopping.documentId
         product.userId = shopping.userId
-        getDB().collection(PRODUCTS).add(product)
+        saveReference(product)
+
 
 
 
@@ -54,6 +53,35 @@ class FirebaseRepository {
         }
 
          */
+    }
+
+    private fun saveReference(product: Product) {
+        if(product.referenceId.isEmpty()){
+            Utils().show("Novo produto")
+            createReference(product)
+        }else{
+            Utils().show("Tenho referencia")
+            getReferences(product.userId).whereEqualTo("name", product.name).addSnapshotListener { querySnapshot, _ ->
+                if(querySnapshot?.size() == 0){
+                    createReference(product)
+                }else{
+                    val reference = querySnapshot!!.documents.get(0).toObject(ReferenceProduct::class.java)
+                    Utils().show("Quantidade de documtnso " + querySnapshot.documents.size)
+                    product.referenceId = reference!!.documentId
+                    product.bestPrice = reference.bestPrice()
+                    Utils().show("Criando produto " + product.documentId)
+                    getDB().collection(PRODUCTS).add(product)
+                }
+            }
+        }
+    }
+
+    private fun createReference(product: Product) {
+        var reference = ReferenceProduct(product)
+        getReferences(product.userId).add(reference).addOnSuccessListener {
+            product.referenceId = it.id
+            getDB().collection(PRODUCTS).add(product)
+        }
     }
 
     fun getListsById(adminId: String): Query {
@@ -140,22 +168,27 @@ class FirebaseRepository {
     }
 
     fun updateNewPrice(product: Product) {
-        var task: Task<Void>? = null
-        if(!product.referenceId.isEmpty()){
-            getProduct(product.referenceId).get().addOnSuccessListener {
-                val reference = it!!.toObject(Product::class.java)!!
-                reference.add(product.currentPrice)
-                product.prices = reference.prices
-                task = getProducts().document(reference.documentId).update(product.pricesMap())
+
+        getReferences(product.userId).document(product.referenceId).update("prices", FieldValue.arrayUnion(product.currentPrice)).addOnSuccessListener {
+            Utils().show("succes")
+            getReferences(product.userId).document(product.referenceId).get().continueWithTask {
+                val reference = it.result!!.toObject(ReferenceProduct::class.java)
+                product.bestPrice = reference!!.bestPrice()
+                Utils().show("Salvando produto com novo preço " + product.documentId + " com " + product.bestPrice)
+                getProduct(product.documentId).update(product.newPriceMap())
+
             }
+
+
         }
+    }
 
-        if(task == null || task!!.isSuccessful){
-            getProducts().document(product.documentId).update(product.newPriceMap())
-        }
+    fun getReferenceProducts(userId: String): CollectionReference {
+        return getReferences(userId)
+    }
 
-
-
+    private fun getReferences(userId: String): CollectionReference {
+        return getDB().collection(REFERENCES).document(userId).collection(PRODUCTS)
     }
 
 }

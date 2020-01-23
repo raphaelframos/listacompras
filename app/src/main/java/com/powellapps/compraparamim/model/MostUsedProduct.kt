@@ -8,8 +8,7 @@ class MostUsedProduct(
 ) {
 
     var name = name
-    var list = group.sortedWith(compareBy({it.date}))
-    var referenceId = group.get(0).documentId
+    var list = group
 
     override fun toString(): String {
         return name

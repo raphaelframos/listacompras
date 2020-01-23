@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.powellapps.compraparamim.model.Product
 import com.powellapps.compraparamim.repository.FirebaseRepository
+import java.lang.Exception
 
 class NewListViewModel : ViewModel() {
 
@@ -14,9 +15,14 @@ class NewListViewModel : ViewModel() {
 
         FirebaseRepository().getProductsBy(shoppingId).addSnapshotListener{ snapshot, e ->
             if(!snapshot!!.isEmpty) {
-                var sortedList = snapshot.toObjects(Product::class.java).sortedWith(compareBy({ it.name }))
-                val list = sortedList.sortedWith(compareBy({it.purchased}))
-                products.value = list
+                try {
+                    var sortedList = snapshot.toObjects(Product::class.java).sortedWith(compareBy({ it.name }))
+                    val list = sortedList.sortedWith(compareBy({it.purchased}))
+                    products.value = list
+                }catch (e: Exception){
+                    e.printStackTrace()
+                }
+
             }
         }
 
