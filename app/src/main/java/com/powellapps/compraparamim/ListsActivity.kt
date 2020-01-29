@@ -57,7 +57,7 @@ class ListsActivity : AppCompatActivity() {
         floatingNew.setOnClickListener({
             val position = adapter.shoppingList.size
             val it = Intent(this, NewListActivity::class.java)
-            it.putExtra(ConstantsUtils.POSITION.name, position)
+            it.putExtra(ConstantsUtils.POSITION.name, adapter.shoppingList.first().name)
             startActivity(it)
         })
 

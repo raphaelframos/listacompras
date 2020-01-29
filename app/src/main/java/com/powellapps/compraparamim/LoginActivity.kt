@@ -79,7 +79,6 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener{
-            Utils().show("Auth " + it.isSuccessful)
             if(it.isSuccessful){
                 checkUser()
             }
@@ -91,9 +90,7 @@ class LoginActivity : AppCompatActivity() {
         var firebaseUser : FirebaseUser? = FirebaseAuth.getInstance().currentUser
         var getId : DocumentReference = FirebaseRepository().getDB().collection("users").document(firebaseUser?.uid.toString())
         getId.get().addOnCompleteListener{
-            Utils().show("User " + it.isSuccessful)
             if(it.isSuccessful) {
-                Utils().show("suc " + it.result)
                 val document = it.result
 
                 if(!document?.exists()!!) {
@@ -106,7 +103,6 @@ class LoginActivity : AppCompatActivity() {
                     finish()
 
                 }else{
-                    Utils().show("fim " + firebaseUser?.displayName)
                     val user = it.result!!.toObject(User::class.java)
                     finish()
                 }
