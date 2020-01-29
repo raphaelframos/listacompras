@@ -14,15 +14,14 @@ class NewListViewModel : ViewModel() {
     fun getProducts(shoppingId: String) : LiveData<List<Product>> {
 
         FirebaseRepository().getProductsBy(shoppingId).addSnapshotListener{ snapshot, e ->
-            if(!snapshot!!.isEmpty) {
+            snapshot?.let {
                 try {
-                    var sortedList = snapshot.toObjects(Product::class.java).sortedWith(compareBy({ it.name }))
+                    var sortedList = it!!.toObjects(Product::class.java).sortedWith(compareBy({ it.name }))
                     val list = sortedList.sortedWith(compareBy({it.purchased}))
                     products.value = list
                 }catch (e: Exception){
                     e.printStackTrace()
                 }
-
             }
         }
 

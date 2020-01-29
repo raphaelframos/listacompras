@@ -19,13 +19,16 @@ class ProductViewModel : ViewModel() {
 
         FirebaseRepository().getMostProducts(id).addSnapshotListener{ value, e->
             try {
-                val list = value!!.toObjects(Product::class.java)
-                var mostUsed = ArrayList<MostUsedProduct>()
-                list.groupBy { it.name }.entries.map { (name, group) ->
-                    var product = MostUsedProduct(name, group)
-                    mostUsed.add(product)
+                value?.let {
+                    val list = it!!.toObjects(Product::class.java)
+                    var mostUsed = ArrayList<MostUsedProduct>()
+                    list.groupBy { it.name }.entries.map { (name, group) ->
+                        var product = MostUsedProduct(name, group)
+                        mostUsed.add(product)
+                    }
+                    products.value = mostUsed.sortedByDescending { it.list.size }
                 }
-                products.value = mostUsed.sortedByDescending { it.list.size }
+
             }catch (e : Exception){
                 e.printStackTrace()
             }
@@ -35,12 +38,12 @@ class ProductViewModel : ViewModel() {
 
     fun getReferenceProducts(userId: String): LiveData<List<ReferenceProduct>> {
         FirebaseRepository().getReferenceProducts(userId).addSnapshotListener{ value, e->
-            try {
-                val list = value!!.toObjects(ReferenceProduct::class.java)
+
+            value?.let {
+                val list = it.toObjects(ReferenceProduct::class.java)
                 referenceProducts.value = list
-            }catch (e : Exception){
-                e.printStackTrace()
             }
+
         }
         return referenceProducts
     }

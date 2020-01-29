@@ -18,6 +18,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.powellapps.compraparamim.model.User
 import com.powellapps.compraparamim.repository.FirebaseRepository
+import com.powellapps.compraparamim.utils.Utils
 import java.lang.Exception
 import kotlin.math.sign
 
@@ -39,9 +40,14 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        signInGoogle()
 
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if(!FirebaseRepository().existUser()){
+            signInGoogle()
+        }
 
     }
 
@@ -62,29 +68,32 @@ class LoginActivity : AppCompatActivity() {
 
     private fun handleResult(task: Task<GoogleSignInAccount>) {
         try {
-
             val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
             firebaseAuthWithGoogle(account)
 
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener{
+            Utils().show("Auth " + it.isSuccessful)
             if(it.isSuccessful){
                 checkUser()
             }
         }
     }
 
+
     private fun checkUser() {
         var firebaseUser : FirebaseUser? = FirebaseAuth.getInstance().currentUser
         var getId : DocumentReference = FirebaseRepository().getDB().collection("users").document(firebaseUser?.uid.toString())
         getId.get().addOnCompleteListener{
+            Utils().show("User " + it.isSuccessful)
             if(it.isSuccessful) {
+                Utils().show("suc " + it.result)
                 val document = it.result
 
                 if(!document?.exists()!!) {
@@ -96,6 +105,10 @@ class LoginActivity : AppCompatActivity() {
                     FirebaseRepository().saveUser(user)
                     finish()
 
+                }else{
+                    Utils().show("fim " + firebaseUser?.displayName)
+                    val user = it.result!!.toObject(User::class.java)
+                    finish()
                 }
 
             }
