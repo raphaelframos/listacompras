@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.powellapps.compraparamim.model.Shopping
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,6 +40,16 @@ class Utils {
     fun getMoney(d: Double) : String {
         val format: NumberFormat = NumberFormat.getCurrencyInstance()
         return format.format(d)
+    }
+
+    fun maxName(list: List<Shopping>): Int {
+        var number = Int.MIN_VALUE
+        list.forEach {
+            if(it.name > number){
+                number = it.name
+            }
+        }
+        return number
     }
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.viewmodel.MyListViewModel
 import com.powellapps.compraparamim.viewmodel.ShareViewModel
 import com.powellapps.compraparamim.utils.ConstantsUtils
+import com.powellapps.compraparamim.utils.Utils
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 
 class ListsActivity : AppCompatActivity() {
@@ -37,9 +39,9 @@ class ListsActivity : AppCompatActivity() {
        // supportActionBar?.elevation = 0F
         adapter = MyListAdapter(this, false)
 
-        myListViewModel = ViewModelProviders.of(this).get(MyListViewModel::class.java)
-        productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
-        shareViewModel = ViewModelProviders.of(this).get(ShareViewModel::class.java)
+        myListViewModel = ViewModelProvider(this).get(MyListViewModel::class.java)
+        productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
+        shareViewModel = ViewModelProvider(this).get(ShareViewModel::class.java)
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView_myList)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -55,9 +57,8 @@ class ListsActivity : AppCompatActivity() {
 
         val floatingNew : FloatingActionButton = findViewById(R.id.floatingActionButton_new_list)
         floatingNew.setOnClickListener({
-            val position = adapter.shoppingList.size
             val it = Intent(this, NewListActivity::class.java)
-            it.putExtra(ConstantsUtils.POSITION.name, adapter.shoppingList.first().name)
+            it.putExtra(ConstantsUtils.POSITION.name, Utils().maxName(adapter.shoppingList))
             startActivity(it)
         })
 

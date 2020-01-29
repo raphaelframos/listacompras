@@ -1,6 +1,5 @@
 package com.powellapps.compraparamim
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,25 +7,25 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.powellapps.compraparamim.adapter.ProductAdapter
-import com.powellapps.compraparamim.repository.FirebaseRepository
-import com.powellapps.compraparamim.model.Shopping
-import com.powellapps.compraparamim.model.Product
 import com.powellapps.compraparamim.fragment.ShareListFragment
-import com.powellapps.compraparamim.model.MostUsedProduct
+import com.powellapps.compraparamim.model.Product
 import com.powellapps.compraparamim.model.ReferenceProduct
-import com.powellapps.compraparamim.viewmodel.NewListViewModel
+import com.powellapps.compraparamim.model.Shopping
+import com.powellapps.compraparamim.repository.FirebaseRepository
 import com.powellapps.compraparamim.utils.ConstantsUtils
 import com.powellapps.compraparamim.utils.Utils
+import com.powellapps.compraparamim.viewmodel.NewListViewModel
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.activity_new_list.*
-import kotlin.collections.ArrayList
 
 class NewListActivity : AppCompatActivity() {
 
@@ -94,8 +93,8 @@ class NewListActivity : AppCompatActivity() {
     }
 
     private fun initViewModels(): Pair<NewListViewModel, ProductViewModel> {
-        val viewModel = ViewModelProviders.of(this).get(NewListViewModel::class.java)
-        val viewModelNames = ViewModelProviders.of(this).get(ProductViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(NewListViewModel::class.java)
+        val viewModelNames = ViewModelProvider(this).get(ProductViewModel::class.java)
         return Pair(viewModel, viewModelNames)
     }
 
@@ -151,7 +150,6 @@ class NewListActivity : AppCompatActivity() {
             val referenceProduct : ReferenceProduct = (editTextName.adapter.getItem(position) as ReferenceProduct)
             product.referenceId = referenceProduct.documentId
             product.bestPrice = referenceProduct.bestPrice()
-            Utils().show("OnItemClick")
             createProduct()
         }
 
@@ -172,7 +170,11 @@ class NewListActivity : AppCompatActivity() {
                     ).show(supportFragmentManager, "share")
                 }
                 R.id.item_copy -> {
-
+                    val newPosition = shopping.name
+                    Toast.makeText(applicationContext, "Teste " + adapter.products.size, Toast.LENGTH_LONG).show()
+                    shopping = Shopping()
+                    shopping.name = newPosition
+                    shopping.userId = FirebaseRepository().getUserId()
                 }
             }
         }

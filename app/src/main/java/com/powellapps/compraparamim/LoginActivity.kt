@@ -94,10 +94,10 @@ class LoginActivity : AppCompatActivity() {
                 val document = it.result
 
                 if(!document?.exists()!!) {
-                    val id = firebaseUser?.uid
-                    val name = firebaseUser?.displayName
-                    val picture = firebaseUser?.photoUrl
-                    val user = User(id,name, picture.toString());
+                    val id = firebaseUser!!.uid
+                    val name = firebaseUser!!.displayName!!
+                    val picture = firebaseUser!!.photoUrl
+                    val user = User(id, name, picture.toString());
 
                     FirebaseRepository().saveUser(user)
                     finish()
