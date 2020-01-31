@@ -1,10 +1,12 @@
 package com.powellapps.compraparamim
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -62,6 +64,10 @@ class ListsActivity : AppCompatActivity() {
             startActivity(it)
         })
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         if(FirebaseRepository().existUser()){
             myListViewModel.getList(FirebaseRepository().getUserId()).observe(this, Observer {
                 adapter.update(it)
@@ -77,9 +83,6 @@ class ListsActivity : AppCompatActivity() {
         }else{
             startActivity(Intent(this, LoginActivity::class.java))
         }
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -95,5 +98,10 @@ class ListsActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        AlertDialog.Builder(this).setTitle("Atenção").setMessage("Deseja sair do app?").setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, which -> finish() }).setNegativeButton("Não", null).show()
     }
 }

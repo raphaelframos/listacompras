@@ -39,6 +39,7 @@ class MyListAdapter(val context: Context, val isShared : Boolean) : RecyclerView
         holder.itemView.setOnClickListener({
             val it = Intent(context, NewListActivity::class.java)
             it.putExtra(ConstantsUtils.SHOPPING.name, shopping)
+            it.putExtra(ConstantsUtils.SHOPPING_NAME.name, Utils().maxName(shoppingList))
             context.startActivity(it)
         })
 

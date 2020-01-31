@@ -124,7 +124,7 @@ class NewListActivity : AppCompatActivity() {
     private fun getShoppingIfExists() {
 
         val value = intent.getSerializableExtra(ConstantsUtils.SHOPPING.name)
-        value.let {
+        value?.let {
             shopping = it as Shopping
         }
     }
@@ -170,11 +170,10 @@ class NewListActivity : AppCompatActivity() {
                     ).show(supportFragmentManager, "share")
                 }
                 R.id.item_copy -> {
-                    val newPosition = shopping.name
-                    Toast.makeText(applicationContext, "Teste " + adapter.products.size, Toast.LENGTH_LONG).show()
-                    shopping = Shopping()
-                    shopping.name = newPosition
-                    shopping.userId = FirebaseRepository().getUserId()
+                    val products = adapter.products
+                    val newPosition = intent.getIntExtra(ConstantsUtils.SHOPPING_NAME.name, 1) + 1
+                    Utils().show("Teste " + newPosition)
+
                 }
             }
         }

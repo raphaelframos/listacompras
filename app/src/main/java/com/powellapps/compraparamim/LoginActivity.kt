@@ -40,15 +40,9 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-    }
-
-    override fun onResume() {
-        super.onResume()
         if(!FirebaseRepository().existUser()){
             signInGoogle()
         }
-
     }
 
     private fun signInGoogle() {
@@ -98,15 +92,12 @@ class LoginActivity : AppCompatActivity() {
                     val name = firebaseUser!!.displayName!!
                     val picture = firebaseUser!!.photoUrl
                     val user = User(id, name, picture.toString());
-
                     FirebaseRepository().saveUser(user)
-                    finish()
-
-                }else{
-                    val user = it.result!!.toObject(User::class.java)
-                    finish()
                 }
 
+            }
+            if(it.isComplete){
+                finish()
             }
         }
 
