@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.powellapps.compraparamim.adapter.ProductNameAdapter
 import com.powellapps.compraparamim.adapter.MyListAdapter
 import com.powellapps.compraparamim.fragment.SearchListFragment
@@ -25,6 +26,7 @@ import com.powellapps.compraparamim.viewmodel.ProductViewModel
 
 class ListsActivity : AppCompatActivity() {
 
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var myListViewModel: MyListViewModel
     private lateinit var productViewModel : ProductViewModel
     private lateinit var shareViewModel : ShareViewModel
@@ -38,7 +40,7 @@ class ListsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lists)
 
-       // supportActionBar?.elevation = 0F
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         adapter = MyListAdapter(this, false)
 
         myListViewModel = ViewModelProvider(this).get(MyListViewModel::class.java)

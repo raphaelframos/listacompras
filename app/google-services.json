@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1094808765732-gql9mgtb09tmscpkpd3i02m9nekp0hlv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.powellapps.compraparamim",
+            "certificate_hash": "924b31787f3d6b702ddc11509e618b469829fd96"
+          }
+        },
+        {
+          "client_id": "1094808765732-mtfvmiilrvnm42gpdbeu9fmuc85u2fvb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.powellapps.compraparamim",
+            "certificate_hash": "803a3d6998fb10e262a6400069b9adbcf505b452"
+          }
+        },
+        {
           "client_id": "1094808765732-4iacr3m2q73qoh63ep0lfoi4ep0kh1h0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -36,7 +52,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1094808765732-dnu52riieik6qdbinakmd8h1eqtucuom.apps.googleusercontent.com",
+              "client_id": "1094808765732-jgt8fpmtg6uj2ctt3pgf2290g250tmg8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

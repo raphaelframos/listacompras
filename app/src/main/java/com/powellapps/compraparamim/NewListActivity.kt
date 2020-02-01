@@ -7,13 +7,14 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.powellapps.compraparamim.adapter.ProductAdapter
 import com.powellapps.compraparamim.fragment.ShareListFragment
@@ -27,12 +28,14 @@ import com.powellapps.compraparamim.viewmodel.NewListViewModel
 import com.powellapps.compraparamim.viewmodel.ProductViewModel
 import kotlinx.android.synthetic.main.activity_new_list.*
 
+
 class NewListActivity : AppCompatActivity() {
 
     var adapter = ProductAdapter(this)
     lateinit var editTextName : AutoCompleteTextView
     var shopping : Shopping = Shopping()
     var product : Product = Product()
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,11 @@ class NewListActivity : AppCompatActivity() {
             createProduct()
         })
 
+        mAdView = findViewById(R.id.adView)
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+    //
     }
 
     private fun createProduct() {
