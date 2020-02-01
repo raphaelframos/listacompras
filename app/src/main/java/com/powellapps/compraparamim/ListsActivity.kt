@@ -101,7 +101,7 @@ class ListsActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        AlertDialog.Builder(this).setTitle("Atenção").setMessage("Deseja sair do app?").setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, which -> finish() }).setNegativeButton("Não", null).show()
+        AlertDialog.Builder(this).setTitle("Atenção").setMessage("Deseja sair do app?").setPositiveButton("Sim",
+            { dialog, which -> super.onBackPressed() }).setNegativeButton("Não", null).show()
     }
 }
