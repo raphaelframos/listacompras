@@ -50,7 +50,7 @@ class MyListAdapter(val context: Context, val isShared : Boolean) : RecyclerView
         }
 
         Glide.with(context)
-            .load(FirebaseRepository().getUser().photoUrl)
+            .load(shopping.userPhoto)
             .apply(RequestOptions.circleCropTransform())
             .into(holder.imageView);
     }

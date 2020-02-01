@@ -43,7 +43,7 @@ class Utils {
     }
 
     fun maxName(list: List<Shopping>): Int {
-        var number = Int.MIN_VALUE
+        var number = 0
         list.forEach {
             if(it.name > number){
                 number = it.name

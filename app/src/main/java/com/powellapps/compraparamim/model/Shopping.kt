@@ -11,6 +11,7 @@ class Shopping : Serializable {
     var name = 1
     var date = 0L
     var userId = ""
+    var userPhoto = ""
     @DocumentId
     var documentId = ""
     var shareId = ""

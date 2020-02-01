@@ -104,6 +104,7 @@ class NewListActivity : AppCompatActivity() {
             shopping = Shopping()
             shopping.name = newPosition
             shopping.userId = FirebaseRepository().getUserId()
+            shopping.userPhoto = FirebaseRepository().getUser().photoUrl.toString()
             val id = FirebaseRepository().saveShopping(shopping)
             if (id != null) {
                 shopping.documentId = id

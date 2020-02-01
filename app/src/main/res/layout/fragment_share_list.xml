@@ -8,11 +8,12 @@
     tools:context=".fragment.ShareListFragment">
 
     <androidx.appcompat.widget.Toolbar
-        app:title="Compartilhamento"
         android:id="@+id/toolbar"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></androidx.appcompat.widget.Toolbar>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:title="Compartilhamento"
+        app:titleTextColor="#FFFFFF"></androidx.appcompat.widget.Toolbar>
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
