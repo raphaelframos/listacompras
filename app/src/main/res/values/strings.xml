@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">CompraParaMim</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Buy4Me</string>
     <string name="minhas_listas">Minhas listas</string>
     <string name="compartilhar">Compartilhar</string>
 
@@ -19,12 +16,10 @@
         <item>10</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cancelar">Cancelar</string>
     <string name="campo_branco">Campo em branco!</string>
     <string name="senha">Senha</string>
     <string name="duplicar">Duplicar</string>
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id">ca-app-pub-8207402738279311/7328818113</string>
 
 </resources>

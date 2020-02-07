@@ -1,58 +1,42 @@
 {
   "project_info": {
-    "project_number": "1094808765732",
-    "firebase_url": "https://compraparamim.firebaseio.com",
-    "project_id": "compraparamim",
-    "storage_bucket": "compraparamim.appspot.com"
+    "project_number": "302988871609",
+    "firebase_url": "https://buy4me-50cc7.firebaseio.com",
+    "project_id": "buy4me-50cc7",
+    "storage_bucket": "buy4me-50cc7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1094808765732:android:543951c7858414e9fe5fb1",
+        "mobilesdk_app_id": "1:302988871609:android:f92e993c47f8e86e199868",
         "android_client_info": {
-          "package_name": "com.powellapps.compraparamim"
+          "package_name": "com.powellapps.buyforme"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1094808765732-gql9mgtb09tmscpkpd3i02m9nekp0hlv.apps.googleusercontent.com",
+          "client_id": "302988871609-re1s6a762dv65cbipclttrid85djat1c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.powellapps.compraparamim",
+            "package_name": "com.powellapps.buyforme",
             "certificate_hash": "924b31787f3d6b702ddc11509e618b469829fd96"
           }
         },
         {
-          "client_id": "1094808765732-mtfvmiilrvnm42gpdbeu9fmuc85u2fvb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.powellapps.compraparamim",
-            "certificate_hash": "803a3d6998fb10e262a6400069b9adbcf505b452"
-          }
-        },
-        {
-          "client_id": "1094808765732-4iacr3m2q73qoh63ep0lfoi4ep0kh1h0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.powellapps.compraparamim",
-            "certificate_hash": "7bf94e8431cbf8c09d282762db36c8526efa6c30"
-          }
-        },
-        {
-          "client_id": "1094808765732-dnu52riieik6qdbinakmd8h1eqtucuom.apps.googleusercontent.com",
+          "client_id": "302988871609-gh6rd78vkri30d6tr31p7tmeat6lcqou.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCZ1Iqe1T17-ik-yv1q1UuwUijwsBZrXyY"
+          "current_key": "AIzaSyCp-0WAuvjd_CB99ub8At-QYxWdtcZ67EQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1094808765732-jgt8fpmtg6uj2ctt3pgf2290g250tmg8.apps.googleusercontent.com",
+              "client_id": "302988871609-gh6rd78vkri30d6tr31p7tmeat6lcqou.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
