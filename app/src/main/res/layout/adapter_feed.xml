@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_default"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Label"
+        android:layout_marginEnd="@dimen/margin_default"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_product_amount"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Coca cola 2L"
+        android:id="@+id/text_view_product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="R$ 10, 00"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_product_name"
+        android:id="@+id/text_view_product_best_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/LabelSecondary"
+        android:layout_margin="@dimen/margin_default"
+        app:layout_constraintBottom_toBottomOf="@+id/check_box_purchase"
+        app:layout_constraintTop_toTopOf="@+id/check_box_purchase"
+        app:layout_constraintEnd_toStartOf="@+id/check_box_purchase"
+        tools:text="10"
+        android:id="@+id/text_view_product_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_product_best_price"
+        app:layout_constraintTop_toTopOf="@+id/text_view_product_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/check_box_purchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

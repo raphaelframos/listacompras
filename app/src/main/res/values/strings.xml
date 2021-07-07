@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Buy4Me</string>
+    <string name="minhas_listas">Minhas listas</string>
+    <string name="compartilhar">Compartilhar</string>
+
+    <string-array name="amount">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string name="quantidade">Quantidade</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="senha">Senha</string>
+    <string name="duplicar">Duplicar</string>
+    <string name="banner_ad_unit_id">ca-app-pub-8207402738279311/7328818113</string>
+    <string name="produtos_mais_comprados">Produtos mais comprados</string>
+    <string name="lista__">#</string>
+    <string name="nome_do_produto">Nome do produto</string>
+    <string name="salvar">Salvar</string>
+    <string name="crie_um_novo_produto">Crie um novo produto</string>
+    <string name="tag_product_detail">productDetail</string>
+    <string name="tag_new_product">newProduct</string>
+    <string name="preco">Preço</string>
+    <string name="nome_do_estabelecimento">Nome do estabelecimento</string>
+    <string name="atualizando">Atualizando</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="comprado">Comprado</string>
+    <string name="campo_branco">Campo em branco!</string>
+    <string name="compartilhado">Compartilhado</string>
+    <string name="pessoas">Pessoas</string>
+    <string name="atencao">Atenção</string>
+    <string name="deseja_compartilhar_lista">Deseja compartilhar sua lista com</string>
+    <string name="observacao">Observação</string>
+    <string name="remover">Remover</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="deseja_remover_produto">Deseja remover este produto?</string>
+
+</resources>

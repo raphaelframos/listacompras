@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "302988871609",
+    "firebase_url": "https://buy4me-50cc7.firebaseio.com",
+    "project_id": "buy4me-50cc7",
+    "storage_bucket": "buy4me-50cc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302988871609:android:f92e993c47f8e86e199868",
+        "android_client_info": {
+          "package_name": "com.powellapps.buyforme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302988871609-re1s6a762dv65cbipclttrid85djat1c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.powellapps.buyforme",
+            "certificate_hash": "924b31787f3d6b702ddc11509e618b469829fd96"
+          }
+        },
+        {
+          "client_id": "302988871609-gh6rd78vkri30d6tr31p7tmeat6lcqou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp-0WAuvjd_CB99ub8At-QYxWdtcZ67EQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302988871609-gh6rd78vkri30d6tr31p7tmeat6lcqou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
